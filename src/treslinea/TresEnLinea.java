@@ -1,8 +1,8 @@
 package treslinea;
 
-import lib.IO;
 import proto.Game;
 import proto.Player;
+
 
 public class TresEnLinea implements Game {
 
@@ -36,8 +36,8 @@ public class TresEnLinea implements Game {
         int x = 0, y = 0;
         do {
             System.out.println("Player " + player.getId() + " enter coords x , y: ");
-            x = IO.scanInt();
-            y = IO.scanInt();
+            x = lib.Misc.IO.scanInt();
+            y = lib.Misc.IO.scanInt();
         } while (x < 1 || x > 3 || y < 1 || y > 3);
         return new int[]{x, y};
     }

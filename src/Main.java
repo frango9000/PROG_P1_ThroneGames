@@ -2,7 +2,7 @@ import proto.Game;
         import treslinea.TresEnLinea;
 
         import javax.swing.*;
-
+//import lib.*;
 public class Main {
     public static void main(String[] args) {
         String[] games = {"3 en Linea", "Conecta 4"};
