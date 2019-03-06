@@ -178,33 +178,13 @@ public class DamasBoard extends Board {
     }
 
     public boolean isMovable(int[] coords) {
-        int x = coords[0];
-        int y = coords[1];
-        if (table[x][y] == 'x') {
-            if (canMoveUp(coords))
-                return true;
-        } else if (table[x][y] == 'o') {
-            if (canMoveDown(coords))
-                return true;
-        } else if (table[x][y] == 'X' || table[x][y] == 'O') {
-            if (canMoveUp(coords) || canMoveDown(coords))
-                return true;
-        }
-        return false;
-    }
-
-    public boolean canMoveUp(int[] coords) {
-        return canMoveUpLeft(coords) || canMoveUpRight(coords);
-    }
-
-    public boolean canMoveDown(int[] coords) {
-        return (canMoveDownLeft(coords) || canMoveDownRight(coords));
+        return canMoveUpLeft(coords) || canMoveUpRight(coords) || canMoveDownLeft(coords) || canMoveDownRight(coords);
     }
 
     public boolean canMoveUpLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == 0)//top row cant go above
+        if (x == 0 || table[x][y] == 'o')//top row cant go above / p2 pawn cant go above
             return false;
         if (y > 0) {
             return table[x - 1][y - 1] == ' ';//above left
@@ -215,7 +195,7 @@ public class DamasBoard extends Board {
     public boolean canMoveUpRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == 0)//top row cant go above
+        if (x == 0 || table[x][y] == 'o')//top row cant go above / p2 pawn cant go above
             return false;
         if (y < table[x].length - 1) {
             return table[x - 1][y + 1] == ' ';//above left
@@ -226,7 +206,7 @@ public class DamasBoard extends Board {
     public boolean canMoveDownLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == table.length - 1)//last row, cant go below
+        if (x == table.length - 1 || table[x][y] == 'x')//last row, cant go below / p1 pawn cant go below
             return false;
         if (y > 0) {
             return table[x + 1][y - 1] == ' ';//below left
@@ -237,7 +217,7 @@ public class DamasBoard extends Board {
     public boolean canMoveDownRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == table.length - 1)//last row, cant go below
+        if (x == table.length - 1 || table[x][y] == 'x')//last row, cant go below / p1 pawn cant go below
             return false;
         if (y < table[x].length - 1) {
             return table[x + 1][y + 1] == ' ';//below left
