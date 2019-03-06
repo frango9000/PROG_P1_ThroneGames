@@ -28,7 +28,7 @@ public class Damas implements Game {
     }
 
     private void playerTurn(DamasPlayer player) {
-        ArrayList<int[]> movables = table.listOfMovables(player);
+        ArrayList<int[]> movables = table.listOfActionables(player, false);
         ListManip.printList(movables, true);
         //pick piece
         int piece = -1;
@@ -37,16 +37,17 @@ public class Damas implements Game {
         }while( piece >= movables.size() || piece < 0);
         int[] pieceCoords = movables.get(piece);
 
-        //pick position to move piece to
         ArrayList<int[]> moves = table.listOfMoves(pieceCoords);
         ListManip.printList(moves,true);
 
+        //pick position to move piece to
         int move = -1;
         do {
             move = scanInt("Pick a move:");
         }while( move >= moves.size() || move < 0);
         int[] destination = moves.get(move);
 
+        //move piece
         table.move(pieceCoords, destination);
     }
 
