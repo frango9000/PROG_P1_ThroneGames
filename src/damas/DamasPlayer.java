@@ -1,8 +1,6 @@
 package damas;
 
-import proto.Player;
-
-public enum DamasPlayer implements Comparable<DamasPlayer>{
+public enum DamasPlayer implements Comparable<DamasPlayer> {
     PLAYER0(' '),
     PLAYER1('x'),
     PLAYER2('o');
@@ -22,8 +20,6 @@ public enum DamasPlayer implements Comparable<DamasPlayer>{
     public char getIdQ() {
         return idQ;
     }
-
-
 
 
 }

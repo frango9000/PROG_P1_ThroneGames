@@ -1,12 +1,11 @@
 package damas;
 
-import lib.Data.List;
+import lib.Data.ListManip;
 import proto.Board;
 import proto.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 import static lib.Misc.IO.println;
 import static lib.Misc.IO.scanInt;
@@ -17,16 +16,16 @@ public class DamasBoard extends Board {
         DamasBoard db = new DamasBoard();
         db.printBoard();
         ArrayList<int[]> pieces = db.listOfPieces(DamasPlayer.PLAYER2);
-        List.printList(pieces);
+        ListManip.printList(pieces);
         println("");
 
         ArrayList<int[]> movables = db.listOfMovables(DamasPlayer.PLAYER2);
-        List.printList(movables);
+        ListManip.printList(movables);
         int i = scanInt("Move piece:");
 
         int[] c1 = movables.get(i);
         ArrayList<int[]> moves = db.listOfMoves(c1);
-        List.printList(moves);
+        ListManip.printList(moves);
 
         println("");
 
@@ -36,11 +35,11 @@ public class DamasBoard extends Board {
         db.move(c1, ncoords);
         db.printBoard();
         ArrayList<int[]> pieces2 = db.listOfPieces(DamasPlayer.PLAYER2);
-        List.printList(pieces2);
+        ListManip.printList(pieces2);
         println("");
 
         ArrayList<int[]> movables2 = db.listOfMovables(DamasPlayer.PLAYER2);
-        List.printList(movables2);
+        ListManip.printList(movables2);
 
     }
 
@@ -141,18 +140,18 @@ public class DamasBoard extends Board {
 
     }
 
-    public ArrayList<int[]> listOfMoves(int[] coords){
+    public ArrayList<int[]> listOfMoves(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         ArrayList<int[]> moves = new ArrayList<>();
-        if(canMoveUpLeft(coords))
-            moves.add(new int[]{x-1,y-1});
+        if (canMoveUpLeft(coords))
+            moves.add(new int[]{x - 1, y - 1});
         if (canMoveUpRight(coords))
-            moves.add(new int[]{x-1,y+1});
-        if(canMoveDownLeft(coords))
-            moves.add(new int[]{x+1,y-1});
+            moves.add(new int[]{x - 1, y + 1});
+        if (canMoveDownLeft(coords))
+            moves.add(new int[]{x + 1, y - 1});
         if (canMoveDownRight(coords))
-            moves.add(new int[]{x+1,y+1});
+            moves.add(new int[]{x + 1, y + 1});
         return moves;
     }
 
@@ -195,53 +194,58 @@ public class DamasBoard extends Board {
     }
 
     public boolean canMoveUp(int[] coords) {
+        return canMoveUpLeft(coords) || canMoveUpRight(coords);
+    }
+
+    public boolean canMoveDown(int[] coords) {
+        return (canMoveDownLeft(coords) || canMoveDownRight(coords));
+    }
+
+    public boolean canMoveUpLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x == 0)//top row cant go above
             return false;
-        return canMoveUpLeft(coords) || canMoveDownRight(coords);
-    }
-
-    public boolean canMoveDown(int[] coords) {
-        int x = coords[0];
-        int y = coords[1];
-        if (x == table.length - 1)//last row, cant go below
-            return false;
-        return (canMoveDownLeft(coords) || canMoveDownRight(coords));
-    }
-    public boolean canMoveUpLeft(int[] coords) {
-        int x = coords[0];
-        int y = coords[1];
         if (y > 0) {
             return table[x - 1][y - 1] == ' ';//above left
         }
         return false;
     }
+
     public boolean canMoveUpRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
+        if (x == 0)//top row cant go above
+            return false;
         if (y < table[x].length - 1) {
             return table[x - 1][y + 1] == ' ';//above left
         }
         return false;
     }
+
     public boolean canMoveDownLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
+        if (x == table.length - 1)//last row, cant go below
+            return false;
         if (y > 0) {
             return table[x + 1][y - 1] == ' ';//below left
         }
         return false;
     }
+
     public boolean canMoveDownRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
+        if (x == table.length - 1)//last row, cant go below
+            return false;
         if (y < table[x].length - 1) {
             return table[x + 1][y + 1] == ' ';//below left
         }
         return false;
     }
-    public void move(int[] coords,int[] newcoords){
+
+    public void move(int[] coords, int[] newcoords) {
         int x = coords[0];
         int y = coords[1];
         int nx = newcoords[0];
