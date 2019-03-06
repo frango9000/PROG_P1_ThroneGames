@@ -159,6 +159,21 @@ public class DamasBoard extends Board {
         return moves;
     }
 
+    public ArrayList<int[]> listOfAttackMoves(int[] coords) {
+        int x = coords[0];
+        int y = coords[1];
+        ArrayList<int[]> moves = new ArrayList<>();
+        if (canEatUpLeft(table,coords))
+            moves.add(new int[]{x - 2, y - 2});
+        if (canEatUpRight(table,coords))
+            moves.add(new int[]{x - 2, y + 2});
+        if (canEatDownLeft(table,coords))
+            moves.add(new int[]{x + 2, y - 2});
+        if (canEatDownRight(table,coords))
+            moves.add(new int[]{x + 2, y + 2});
+        return moves;
+    }
+
     public ArrayList<int[]> listOfMovables(DamasPlayer player) {
         ArrayList<int[]> pieces = listOfPieces(player);
         ArrayList<int[]> movables = new ArrayList<>();
@@ -270,7 +285,7 @@ public class DamasBoard extends Board {
         if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
             return false;
         char piece = tab[x][y];
-        if (y > 1) {
+        if (y > 1 && Character.isLetter(tab[x-1][y-1]) ) {
             return Character.toLowerCase(tab[x - 1][y - 1]) != Character.toLowerCase(piece) && tab[x - 2][y - 2] == ' ';
         }
         return false;
@@ -282,7 +297,7 @@ public class DamasBoard extends Board {
         if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
             return false;
         char piece = tab[x][y];
-        if (y < table[x].length - 2) {
+        if (y < table[x].length - 2 && Character.isLetter(tab[x-1][y+1]) ) {
             return Character.toLowerCase(tab[x - 1][y + 1]) != Character.toLowerCase(piece) && tab[x - 2][y + 2] == ' ';
         }
         return false;
@@ -294,7 +309,7 @@ public class DamasBoard extends Board {
         if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
             return false;
         char piece = tab[x][y];
-        if (y > 1) {
+        if (y > 1 && Character.isLetter(tab[x+1][y-1]) ) {
             return Character.toLowerCase(tab[x + 1][y - 1]) != Character.toLowerCase(piece) && tab[x + 2][y - 2] == ' ';
         }
         return false;
@@ -306,7 +321,7 @@ public class DamasBoard extends Board {
         char piece = tab[x][y];
         if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
             return false;
-        if (y < table[x].length - 2) {
+        if (y < table[x].length - 2 && Character.isLetter(tab[x+1][y+1]) ) {
             return Character.toLowerCase(tab[x + 1][y + 1]) != Character.toLowerCase(piece) && tab[x + 2][y + 2] == ' ';
         }
         return false;
