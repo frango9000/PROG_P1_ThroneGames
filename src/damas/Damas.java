@@ -5,6 +5,7 @@ import proto.Game;
 
 import java.util.ArrayList;
 
+import static lib.Misc.IO.println;
 import static lib.Misc.IO.scanInt;
 
 public class Damas implements Game {
@@ -29,7 +30,7 @@ public class Damas implements Game {
 
     private void playerTurn(DamasPlayer player) {
         ArrayList<int[]> movables = table.listOfActionables(player, false);
-        ListManip.printList(movables, true);
+        ListManip.printList(movables, true,0);
         //pick piece
         int piece = -1;
         do {
@@ -38,7 +39,17 @@ public class Damas implements Game {
         int[] pieceCoords = movables.get(piece);
 
         ArrayList<int[]> moves = table.listOfMoves(pieceCoords);
-        ListManip.printList(moves,true);
+
+        if(moves.size() > 0) {
+            println("Moves: ");
+            ListManip.printList(moves, true, 0);
+        }
+
+        ArrayList<int[]> attackMoves = table.listOfAttackMoves(pieceCoords);
+        if(attackMoves.size() > 0){
+            println("Attacks: ");
+            ListManip.printList(attackMoves,true, moves.size());
+        }
 
         //pick position to move piece to
         int move = -1;
