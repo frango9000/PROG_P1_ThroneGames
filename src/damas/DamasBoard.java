@@ -1,11 +1,15 @@
 package damas;
 
+import damas.misc.CoordinatesComparator;
+import lib.Data.ArrayManip;
 import lib.Data.ListManip;
+import lib.Data.MatrixManip;
 import proto.Board;
 import proto.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TreeSet;
 
 import static lib.Misc.IO.println;
 import static lib.Misc.IO.scanInt;
@@ -166,6 +170,29 @@ public class DamasBoard extends Board {
         return movables;
     }
 
+    public ArrayList<int[]> listOfAttackers(DamasPlayer player) {
+        ArrayList<int[]> pieces = listOfPieces(player);
+        ArrayList<int[]> attackers = new ArrayList<>();
+
+        for (int[] coords : pieces) {
+            if (canEat(table,coords))
+                attackers.add(coords);
+        }
+        return attackers;
+    }
+
+    public ArrayList<int[]> listOfActionables(DamasPlayer player, boolean isEating){
+        TreeSet<int[]> actionables = new TreeSet<>(new CoordinatesComparator());
+        if(!isEating) {
+            ArrayList<int[]> movables = listOfMovables(player);
+            actionables.addAll(movables);
+        }
+        ArrayList<int[]> attackers = listOfAttackers(player);
+        actionables.addAll(attackers);
+        return new ArrayList<>(actionables);
+    }
+
+
     public ArrayList<int[]> listOfPieces(DamasPlayer player) {
         ArrayList<int[]> lista = new ArrayList<>();
         for (int row = 0; row < table.length; row++) {
@@ -225,13 +252,78 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public void move(int[] coords, int[] newcoords) {
+    public void move(int[] piece, int[] moveTo) {
+        int x = piece[0];
+        int y = piece[1];
+        int newX = moveTo[0];
+        int newY = moveTo[1];
+        table[newX][newY] = table[x][y];
+        table[x][y] = ' ';
+    }
+
+    public boolean canEat(char[][] tab, int[] coords){
+        return canEatUpLeft(tab, coords) || canEatUpRight(tab, coords) ||canEatDownLeft(tab, coords) ||canEatDownRight(tab, coords);
+    }
+    public boolean canEatUpLeft(char[][] tab, int[] coords){
         int x = coords[0];
         int y = coords[1];
-        int nx = newcoords[0];
-        int ny = newcoords[1];
-        table[nx][ny] = table[x][y];
-        table[x][y] = ' ';
+        if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
+            return false;
+        char piece = tab[x][y];
+        if (y > 1) {
+            return Character.toLowerCase(tab[x - 1][y - 1]) != Character.toLowerCase(piece) && tab[x - 2][y - 2] == ' ';
+        }
+        return false;
+    }
+
+    public boolean canEatUpRight(char[][] tab, int[] coords){
+        int x = coords[0];
+        int y = coords[1];
+        if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
+            return false;
+        char piece = tab[x][y];
+        if (y < table[x].length - 2) {
+            return Character.toLowerCase(tab[x - 1][y + 1]) != Character.toLowerCase(piece) && tab[x - 2][y + 2] == ' ';
+        }
+        return false;
+    }
+
+    public boolean canEatDownLeft(char[][] tab, int[] coords){
+        int x = coords[0];
+        int y = coords[1];
+        if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
+            return false;
+        char piece = tab[x][y];
+        if (y > 1) {
+            return Character.toLowerCase(tab[x + 1][y - 1]) != Character.toLowerCase(piece) && tab[x + 2][y - 2] == ' ';
+        }
+        return false;
+    }
+
+    public boolean canEatDownRight(char[][] tab, int[] coords){
+        int x = coords[0];
+        int y = coords[1];
+        char piece = tab[x][y];
+        if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
+            return false;
+        if (y < table[x].length - 2) {
+            return Character.toLowerCase(tab[x + 1][y + 1]) != Character.toLowerCase(piece) && tab[x + 2][y + 2] == ' ';
+        }
+        return false;
+    }
+
+    public char[][] eat(char[][] tab, int[] piece, int[] moveTo){
+        char[][] temp  = tab.clone();
+        int x = piece[0];
+        int y = piece[1];
+        int newX = moveTo[0];
+        int newY = moveTo[1];
+        int eatX = piece[Math.abs(x-newX-1)];
+        int eatY = piece[Math.abs(y-newY-1)];
+
+        temp[newX][newY] = temp[x][y];
+        temp[x][y] = temp[eatX][eatY] = ' ';
+        return temp;
     }
 
 }
