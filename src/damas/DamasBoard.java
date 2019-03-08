@@ -1,11 +1,9 @@
 package damas;
 
 import damas.misc.CoordinatesComparator;
-import lib.Data.ArrayManip;
-import lib.Data.ListManip;
-import lib.Data.MatrixManip;
 import lib.Geometry.Line;
 import lib.Geometry.Point;
+import lib.Math.Algebra;
 import proto.Board;
 import proto.Player;
 
@@ -13,41 +11,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
 
-import static lib.Misc.IO.*;
+import static lib.Misc.IO.println;
 
 
 public class DamasBoard extends Board {
-    public static void main(String[] args) {
-        DamasBoard db = new DamasBoard();
-        db.printBoard();
-        ArrayList<int[]> pieces = db.listOfPieces(DamasPlayer.PLAYER2);
-        ListManip.printList(pieces);
-        println("");
-
-        ArrayList<int[]> movables = db.listOfMovables(DamasPlayer.PLAYER2);
-        ListManip.printList(movables);
-        int i = scanInt("Move piece:");
-
-        int[] c1 = movables.get(i);
-        ArrayList<int[]> moves = db.listOfMoves(c1);
-        ListManip.printList(moves);
-
-        println("");
-
-
-        int j = scanInt("to pos:");
-        int[] ncoords = moves.get(j);
-        db.move(c1, ncoords);
-        db.printBoard();
-        ArrayList<int[]> pieces2 = db.listOfPieces(DamasPlayer.PLAYER2);
-        ListManip.printList(pieces2);
-        println("");
-
-        ArrayList<int[]> movables2 = db.listOfMovables(DamasPlayer.PLAYER2);
-        ListManip.printList(movables2);
-
-    }
-
     private DamasPlayer p1 = DamasPlayer.PLAYER1;
     private DamasPlayer p2 = DamasPlayer.PLAYER2;
 
@@ -58,17 +25,16 @@ public class DamasBoard extends Board {
     char[][] table;
 
     public DamasBoard() {
-        rows = 8;
-        cols = 8;
-        fronts = 3;
-        table = new char[rows][cols];
-        clearBoard();
+        this(8,3);
     }
 
-    public DamasBoard(int rows, int cols, int fronts) {
-        this.rows = rows;
-        this.cols = cols;
+    public DamasBoard(int size, int fronts) {
+        this.rows = size;
+        this.cols = size;
         this.fronts = fronts;
+        this.fronts = Algebra.min(fronts, (rows/2)-1);
+        table = new char[rows][cols];
+        clearBoard();
     }
 
     @Override
@@ -118,20 +84,24 @@ public class DamasBoard extends Board {
 
     }
 
+    public char[][] cloneBoard() {
+        return table.clone();
+    }
+
     public Character isGameOver() {
         int pp1 = 0, pp2 = 0;
         for (char[] chars : table) {
             for (char charac : chars) {
-                if (charac == p1.getId())
+                if (charac == p1.getId() || charac == p1.getIdQ())
                     pp1++;
-                else if (charac == p2.getId())
+                else if (charac == p2.getId()|| charac == p2.getIdQ())
                     pp2++;
             }
         }
-        if (pp1 == 0)
-            return p1.getId();
+        if (pp1 == 0)//loser
+            return p2.getIdQ();//winner
         else if (pp2 == 0)
-            return p2.getId();
+            return p1.getIdQ();
         else return null;
     }
 
@@ -160,19 +130,23 @@ public class DamasBoard extends Board {
         return moves;
     }
 
-    public ArrayList<int[]> listOfAttackMoves(int[] coords) {
+    public ArrayList<int[]> listOfAttackMoves(int[] coords, char[][] board) {
         int x = coords[0];
         int y = coords[1];
         ArrayList<int[]> moves = new ArrayList<>();
-        if (canEatUpLeft(table,coords))
+        if (canEatUpLeft(board, coords))
             moves.add(new int[]{x - 2, y - 2});
-        if (canEatUpRight(table,coords))
+        if (canEatUpRight(board, coords))
             moves.add(new int[]{x - 2, y + 2});
-        if (canEatDownLeft(table,coords))
+        if (canEatDownLeft(board, coords))
             moves.add(new int[]{x + 2, y - 2});
-        if (canEatDownRight(table,coords))
+        if (canEatDownRight(board, coords))
             moves.add(new int[]{x + 2, y + 2});
         return moves;
+    }
+
+    public ArrayList<int[]> listOfAttackMoves(int[] coords) {
+        return listOfAttackMoves(coords, table);
     }
 
     public ArrayList<int[]> listOfMovables(DamasPlayer player) {
@@ -191,20 +165,21 @@ public class DamasBoard extends Board {
         ArrayList<int[]> attackers = new ArrayList<>();
 
         for (int[] coords : pieces) {
-            if (canEat(table,coords))
+            if (canEat(table, coords))
                 attackers.add(coords);
         }
         return attackers;
     }
 
-    public ArrayList<int[]> listOfActionables(DamasPlayer player, boolean isEating){
+    public ArrayList<int[]> listOfActionables(DamasPlayer player) {
         TreeSet<int[]> actionables = new TreeSet<>(new CoordinatesComparator());
-        if(!isEating) {
-            ArrayList<int[]> movables = listOfMovables(player);
-            actionables.addAll(movables);
-        }
+
+        ArrayList<int[]> movables = listOfMovables(player);
+        actionables.addAll(movables);
+
         ArrayList<int[]> attackers = listOfAttackers(player);
         actionables.addAll(attackers);
+
         return new ArrayList<>(actionables);
     }
 
@@ -227,7 +202,7 @@ public class DamasBoard extends Board {
     public boolean canMoveUpLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == 0 || table[x][y] == 'o')//top row cant go above / p2 pawn cant go above
+        if (x == 0 || table[x][y] == p2.getId())//top row cant go above / p2 pawn cant go above
             return false;
         if (y > 0) {
             return table[x - 1][y - 1] == ' ';//above left
@@ -238,7 +213,7 @@ public class DamasBoard extends Board {
     public boolean canMoveUpRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == 0 || table[x][y] == 'o')//top row cant go above / p2 pawn cant go above
+        if (x == 0 || table[x][y] == p2.getId())//top row cant go above / p2 pawn cant go above
             return false;
         if (y < table[x].length - 1) {
             return table[x - 1][y + 1] == ' ';//above left
@@ -249,7 +224,7 @@ public class DamasBoard extends Board {
     public boolean canMoveDownLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == table.length - 1 || table[x][y] == 'x')//last row, cant go below / p1 pawn cant go below
+        if (x == table.length - 1 || table[x][y] == p1.getId())//last row, cant go below / p1 pawn cant go below
             return false;
         if (y > 0) {
             return table[x + 1][y - 1] == ' ';//below left
@@ -260,7 +235,7 @@ public class DamasBoard extends Board {
     public boolean canMoveDownRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x == table.length - 1 || table[x][y] == 'x')//last row, cant go below / p1 pawn cant go below
+        if (x == table.length - 1 || table[x][y] == p1.getId())//last row, cant go below / p1 pawn cant go below
             return false;
         if (y < table[x].length - 1) {
             return table[x + 1][y + 1] == ' ';//below left
@@ -275,75 +250,90 @@ public class DamasBoard extends Board {
         int newY = moveTo[1];
         table[newX][newY] = table[x][y];
         table[x][y] = ' ';
+        checkQueenablePawn(newX, newY);
     }
 
-    public boolean canEat(char[][] tab, int[] coords){
-        return canEatUpLeft(tab, coords) || canEatUpRight(tab, coords) ||canEatDownLeft(tab, coords) ||canEatDownRight(tab, coords);
+    public boolean canEat(char[][] tab, int[] coords) {
+        return canEatUpLeft(tab, coords) || canEatUpRight(tab, coords) || canEatDownLeft(tab, coords) || canEatDownRight(tab, coords);
     }
-    public boolean canEatUpLeft(char[][] tab, int[] coords){
+
+    public boolean canEatUpLeft(char[][] tab, int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
+        if (x <= 1 || tab[x][y] == p2.getId())//top 2 rows cant eat above / p2 pawn cant eat above
             return false;
         char piece = tab[x][y];
-        if (y > 1 && Character.isLetter(tab[x-1][y-1]) ) {
+        if (y > 1 && Character.isLetter(tab[x - 1][y - 1])) {
             return Character.toLowerCase(tab[x - 1][y - 1]) != Character.toLowerCase(piece) && tab[x - 2][y - 2] == ' ';
         }
         return false;
     }
 
-    public boolean canEatUpRight(char[][] tab, int[] coords){
+    public boolean canEatUpRight(char[][] tab, int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x <= 1 || tab[x][y] == 'o')//top 2 rows cant eat above / p2 pawn cant eat above
+        if (x <= 1 || tab[x][y] == p2.getId())//top 2 rows cant eat above / p2 pawn cant eat above
             return false;
         char piece = tab[x][y];
-        if (y < table[x].length - 2 && Character.isLetter(tab[x-1][y+1]) ) {
+        if (y < table[x].length - 2 && Character.isLetter(tab[x - 1][y + 1])) {
             return Character.toLowerCase(tab[x - 1][y + 1]) != Character.toLowerCase(piece) && tab[x - 2][y + 2] == ' ';
         }
         return false;
     }
 
-    public boolean canEatDownLeft(char[][] tab, int[] coords){
+    public boolean canEatDownLeft(char[][] tab, int[] coords) {
         int x = coords[0];
         int y = coords[1];
-        if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
+        if (x >= table.length - 2 || tab[x][y] == p1.getId())//bot 2 rows cant eat below / p1 pawn cant eat below
             return false;
         char piece = tab[x][y];
-        if (y > 1 && Character.isLetter(tab[x+1][y-1]) ) {
+        if (y > 1 && Character.isLetter(tab[x + 1][y - 1])) {
             return Character.toLowerCase(tab[x + 1][y - 1]) != Character.toLowerCase(piece) && tab[x + 2][y - 2] == ' ';
         }
         return false;
     }
 
-    public boolean canEatDownRight(char[][] tab, int[] coords){
+    public boolean canEatDownRight(char[][] tab, int[] coords) {
         int x = coords[0];
         int y = coords[1];
         char piece = tab[x][y];
-        if (x >= table.length - 2 || tab[x][y] == 'x')//bot 2 rows cant eat below / p1 pawn cant eat below
+        if (x >= table.length - 2 || tab[x][y] == p1.getId())//bot 2 rows cant eat below / p1 pawn cant eat below
             return false;
-        if (y < table[x].length - 2 && Character.isLetter(tab[x+1][y+1]) ) {
+        if (y < table[x].length - 2 && Character.isLetter(tab[x + 1][y + 1])) {
             return Character.toLowerCase(tab[x + 1][y + 1]) != Character.toLowerCase(piece) && tab[x + 2][y + 2] == ' ';
         }
         return false;
     }
 
-    public char[][] eat(char[][] tab, int[] piece, int[] moveTo){
-        char[][] temp  = tab.clone();
+    public char[][] eat(int[] piece, int[] moveTo) {
+
+        char[][] tab = new char[table.length][table[0].length];
+        System.arraycopy(table,0,tab,0,tab.length);
         int x = piece[0];
         int y = piece[1];
         int newX = moveTo[0];
         int newY = moveTo[1];
 
-        Line line = new Line(new Point(x,y), new Point(newX, newY));
+        Line line = new Line(new Point(x, y), new Point(newX, newY));
         Point eatPoint = line.middlePoint();
-        print(eatPoint.toString());
-        int eatX = (int)eatPoint.x;
-        int eatY = (int)eatPoint.y;
+        println(eatPoint.toString());
+        int eatX = (int) eatPoint.x;
+        int eatY = (int) eatPoint.y;
 
-        temp[newX][newY] = temp[x][y];
-        temp[x][y] = temp[eatX][eatY] = ' ';
-        return temp;
+        tab[newX][newY] = tab[x][y];
+        tab[x][y] = tab[eatX][eatY] = ' ';
+
+        checkQueenablePawn(newX, newY);
+        return tab;
+    }
+
+
+
+    public void checkQueenablePawn(int x, int y) {
+        if ((x == 0) && (table[x][y] == p1.getId()))
+            table[x][y] = p1.getIdQ();
+        else if (x == table.length - 1 && table[x][y] == p2.getId())
+            table[x][y] = p2.getIdQ();
     }
 
 }
