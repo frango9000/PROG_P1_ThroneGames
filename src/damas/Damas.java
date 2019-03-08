@@ -30,36 +30,40 @@ public class Damas implements Game {
 
     private void playerTurn(DamasPlayer player) {
         ArrayList<int[]> movables = table.listOfActionables(player, false);
-        ListManip.printList(movables, true,0);
+        ListManip.printList(movables, true,1);
         //pick piece
-        int piece = -1;
+        int piece = 0;
         do {
             piece = scanInt("Move piece: ");
-        }while( piece >= movables.size() || piece < 0);
-        int[] pieceCoords = movables.get(piece);
+        }while( piece < 1 || piece > movables.size());
+        int[] pieceCoords = movables.get(piece-1);
 
         ArrayList<int[]> moves = table.listOfMoves(pieceCoords);
+        ArrayList<int[]> attacks = table.listOfAttackMoves(pieceCoords);
+        ArrayList<int[]> movats = new ArrayList<>(moves);
+        movats.addAll(attacks);
 
         if(moves.size() > 0) {
             println("Moves: ");
-            ListManip.printList(moves, true, 0);
+            ListManip.printList(moves, true, 1);
         }
 
-        ArrayList<int[]> attackMoves = table.listOfAttackMoves(pieceCoords);
-        if(attackMoves.size() > 0){
+        if(attacks.size() > 0){
             println("Attacks: ");
-            ListManip.printList(attackMoves,true, moves.size());
+            ListManip.printList(attacks,true, moves.size()+1);
         }
 
         //pick position to move piece to
-        int move = -1;
+        int move = 0;
         do {
             move = scanInt("Pick a move:");
-        }while( move >= moves.size() || move < 0);
-        int[] destination = moves.get(move);
+        }while(move < 1 || move >  movats.size() );
+        int[] destination = movats.get(move-1);
 
-        //move piece
-        table.move(pieceCoords, destination);
+        if(move < moves.size())
+            table.move(pieceCoords, destination);
+        else
+            table.eat(table.table, pieceCoords, destination);
     }
 
 

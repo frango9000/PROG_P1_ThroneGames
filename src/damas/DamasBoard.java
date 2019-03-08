@@ -4,6 +4,8 @@ import damas.misc.CoordinatesComparator;
 import lib.Data.ArrayManip;
 import lib.Data.ListManip;
 import lib.Data.MatrixManip;
+import lib.Geometry.Line;
+import lib.Geometry.Point;
 import proto.Board;
 import proto.Player;
 
@@ -11,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
 
-import static lib.Misc.IO.println;
-import static lib.Misc.IO.scanInt;
+import static lib.Misc.IO.*;
 
 
 public class DamasBoard extends Board {
@@ -54,7 +55,7 @@ public class DamasBoard extends Board {
     private int cols;
     private int fronts;
 
-    private char[][] table;
+    char[][] table;
 
     public DamasBoard() {
         rows = 8;
@@ -333,8 +334,12 @@ public class DamasBoard extends Board {
         int y = piece[1];
         int newX = moveTo[0];
         int newY = moveTo[1];
-        int eatX = piece[Math.abs(x-newX-1)];
-        int eatY = piece[Math.abs(y-newY-1)];
+
+        Line line = new Line(new Point(x,y), new Point(newX, newY));
+        Point eatPoint = line.middlePoint();
+        print(eatPoint.toString());
+        int eatX = (int)eatPoint.x;
+        int eatY = (int)eatPoint.y;
 
         temp[newX][newY] = temp[x][y];
         temp[x][y] = temp[eatX][eatY] = ' ';
