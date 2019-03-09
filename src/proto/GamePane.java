@@ -18,7 +18,8 @@ public class GamePane {
     private JOptionPane frame;
     private String font;
 
-    String html = "<html><center><p>This is how to get:</p></center><br><br><ul><li><i>italics</i> and "
+    String html = "<html>This is how to get:"
+            + "<ul><li><i>italics</i> and "
             + "<li><b>bold</b> and "
             + "<li><u>underlined</u>...</ul></html>";
     String table = "<html>\n" +
@@ -67,72 +68,7 @@ public class GamePane {
             "<td class=\"w\"></td>\n" +
             "<td class=\"b\"></td>\n" +
             "<td class=\"w\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>6</th>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>5</th>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>4</th>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>3</th>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>2</th>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>1</th>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
+
             "</tr>\n" +
             "</table>\n" +
             "</body>\n" +
