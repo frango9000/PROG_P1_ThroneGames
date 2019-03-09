@@ -25,14 +25,14 @@ public class DamasBoard extends Board {
     char[][] table;
 
     public DamasBoard() {
-        this(8,3);
+        this(8, 3);
     }
 
     public DamasBoard(int size, int fronts) {
         this.rows = size;
         this.cols = size;
         this.fronts = fronts;
-        this.fronts = Algebra.min(fronts, (rows/2)-1);
+        this.fronts = Algebra.min(fronts, (rows / 2) - 1);
         table = new char[rows][cols];
         clearBoard();
     }
@@ -44,17 +44,17 @@ public class DamasBoard extends Board {
             Arrays.fill(ccs, ' ');
         }
         //fill p1
-        for (int i = table.length - 1, h = 0; h < fronts; i--, h++) {
-            for (int j = 0; j < table[i].length; j++) {
-                if ((i % 2 != 0 && j % 2 == 0) || (i % 2 == 0 && j % 2 != 0))
-                    table[i][j] = p1.getId();
+        for (int row = table.length - 1, h = 0; h < fronts; row--, h++) {
+            for (int col = 0; col < table[row].length; col++) {
+                if ((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0))
+                    table[row][col] = p1.getId();
             }
         }
         //fill p2
-        for (int i = 0; i < fronts; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                if ((i % 2 != 0 && j % 2 == 0) || (i % 2 == 0 && j % 2 != 0))
-                    table[i][j] = p2.getId();
+        for (int row = 0; row < fronts; row++) {
+            for (int col = 0; col < table[row].length; col++) {
+                if ((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0))
+                    table[row][col] = p2.getId();
             }
         }
 
@@ -84,6 +84,72 @@ public class DamasBoard extends Board {
 
     }
 
+    @Override
+    public String toString() {
+        int outBorder = 3;
+        int cellSpace = 1;
+        int cellBorder = 0;
+
+        int pieceSize = 8*32/rows;
+        int fontSize = 8*24/rows;
+
+        String cellBlack = "aaaaaa";
+        String cellWhite = "dddddd";
+        String pieceBlack = "";
+        String pieceWhite = "";
+
+        int totalWidth = 400;
+        int cellSize = totalWidth / rows;
+
+        StringBuilder board = new StringBuilder();
+        board.append("<html>\n" +
+                "<style>\n" +
+                "table{border:solid " + outBorder + "px black;\n" +
+                "border-collapse: collapse;\n" +
+                "table-layout: fixed;\n" +
+                "border-spacing: " + cellSpace + "px;}\n" +
+                "td {border:" + cellBorder + "px solid black;\n" +
+                "width: " + cellSize + "px;\n" +
+                "height: " + cellSize + "px;\n" +
+                "text-align: center;\n" +
+                "font-size: "+pieceSize+"px;}\n" +
+                "td.w{background-color: #" + cellWhite + ";}\n" +
+                "td.b{background-color: #" + cellBlack + ";}\n" +
+                "th{width: 18px; font-size:"+fontSize+"px}\n" +
+                "</style>\n" +
+                "<body>\n");
+
+        //table and head row with letters
+        board.append("<table>\n" +
+                "<tr class=\"colheader\">\n" +
+                "<th> \n" +
+                "</th>\n");
+
+        for (int col = 0; col < table[0].length; col++) {
+            board.append("<th>" + (char) (65 + col) + "</th>\n");
+        }
+
+        //all rows with number
+        for (int row = 0; row < table.length; row++) {
+            board.append("</tr>\n" +
+                    "<tr>\n" +
+                    "<th>" + (table.length - row) + "</th>\n");
+            for (int col = 0; col < table[row].length ; col++) {
+                board.append("<td class=\"");
+                board.append(((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0)) ?  'b':'w');
+                board.append("\">"+DamasPlayer.getCaseSensitiveUTF(table[row][col])+"</td>\n");
+            }
+
+        }
+        board.append("</tr>\n" +
+                "</table>\n" +
+                "</body>\n" +
+                "</html>");
+
+
+        return board.toString();
+    }
+
     public char[][] cloneBoard() {
         return table.clone();
     }
@@ -94,7 +160,7 @@ public class DamasBoard extends Board {
             for (char charac : chars) {
                 if (charac == p1.getId() || charac == p1.getIdQ())
                     pp1++;
-                else if (charac == p2.getId()|| charac == p2.getIdQ())
+                else if (charac == p2.getId() || charac == p2.getIdQ())
                     pp2++;
             }
         }
@@ -308,7 +374,7 @@ public class DamasBoard extends Board {
     public char[][] eat(int[] piece, int[] moveTo) {
 
         char[][] tab = new char[table.length][table[0].length];
-        System.arraycopy(table,0,tab,0,tab.length);
+        System.arraycopy(table, 0, tab, 0, tab.length);
         int x = piece[0];
         int y = piece[1];
         int newX = moveTo[0];
@@ -326,7 +392,6 @@ public class DamasBoard extends Board {
         checkQueenablePawn(newX, newY);
         return tab;
     }
-
 
 
     public void checkQueenablePawn(int x, int y) {
