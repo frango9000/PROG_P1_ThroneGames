@@ -1,6 +1,7 @@
 package treslinea;
 
 import proto.Game;
+import proto.GamePane;
 import proto.SimplePlayer;
 
 
@@ -20,6 +21,11 @@ public class TresEnLinea implements Game {
         }
         game.printBoard();
         System.out.println("Game Over");
+    }
+
+    @Override
+    public void setGamePane(GamePane gamePane) {
+
     }
 
     public void playerTurn(SimplePlayer simplePlayer) {
