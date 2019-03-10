@@ -90,8 +90,8 @@ public class DamasBoard extends Board {
         int cellSpace = 1;
         int cellBorder = 0;
 
-        int pieceSize = 8*32/rows;
-        int fontSize = 8*24/rows;
+        int pieceSize = 8 * 32 / rows;
+        int fontSize = 8 * 24 / rows;
 
         String cellBlack = "aaaaaa";
         String cellWhite = "dddddd";
@@ -112,10 +112,10 @@ public class DamasBoard extends Board {
                 "width: " + cellSize + "px;\n" +
                 "height: " + cellSize + "px;\n" +
                 "text-align: center;\n" +
-                "font-size: "+pieceSize+"px;}\n" +
+                "font-size: " + pieceSize + "px;}\n" +
                 "td.w{background-color: #" + cellWhite + ";}\n" +
                 "td.b{background-color: #" + cellBlack + ";}\n" +
-                "th{width: 18px; font-size:"+fontSize+"px}\n" +
+                "th{width: 18px; font-size:" + fontSize + "px}\n" +
                 "</style>\n" +
                 "<body>\n");
 
@@ -134,10 +134,10 @@ public class DamasBoard extends Board {
             board.append("</tr>\n" +
                     "<tr>\n" +
                     "<th>" + (table.length - row) + "</th>\n");
-            for (int col = 0; col < table[row].length ; col++) {
+            for (int col = 0; col < table[row].length; col++) {
                 board.append("<td class=\"");
-                board.append(((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0)) ?  'b':'w');
-                board.append("\">"+DamasPlayer.getCaseSensitiveUTF(table[row][col])+"</td>\n");
+                board.append(((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0)) ? 'b' : 'w');
+                board.append("\">" + DamasPlayer.getCaseSensitiveUTF(table[row][col]) + "</td>\n");
             }
 
         }
@@ -150,6 +150,7 @@ public class DamasBoard extends Board {
 
         return board.toString();
     }
+
     public Character isGameOver() {
         int pp1 = 0, pp2 = 0;
         for (char[] chars : table) {
@@ -192,7 +193,7 @@ public class DamasBoard extends Board {
         return moves;
     }
 
-    public ArrayList<int[]> listOfAttackMoves(int[] coords, char[][] board) {
+    public ArrayList<int[]> listOfAttackMoves(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         ArrayList<int[]> moves = new ArrayList<>();
@@ -205,10 +206,6 @@ public class DamasBoard extends Board {
         if (canEatDownRight(coords))
             moves.add(new int[]{x + 2, y + 2});
         return moves;
-    }
-
-    public ArrayList<int[]> listOfAttackMoves(int[] coords) {
-        return listOfAttackMoves(coords, table);
     }
 
     public ArrayList<int[]> listOfMovables(DamasPlayer player) {

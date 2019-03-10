@@ -5,7 +5,7 @@ import damas.DamasBoard;
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePane  extends JFrame{
+public class GamePane extends JFrame {
     public static void main(String[] args) {
         GamePane gp = new GamePane();
 
@@ -43,7 +43,7 @@ public class GamePane  extends JFrame{
             "</html>";
 
     public GamePane() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(MIN_WIDTH, MIN_HEIGHT));
+        UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
         title = "Juegos Reunidos";
     }
 
@@ -57,19 +57,19 @@ public class GamePane  extends JFrame{
         this.title = title;
     }
 
-    public void showMessageDialog(String msg){
+    public void showMessageDialog(String msg) {
         JLabel label = new JLabel(msg);
         label.setFont(new Font(font, Font.PLAIN, 14));
         JOptionPane.showMessageDialog(this, label, title, JOptionPane.PLAIN_MESSAGE);
     }
 
-    public int showOptionsDialog(String msg, String[] options){
+    public int showOptionsDialog(String msg, String[] options) {
         JLabel label = new JLabel(msg);
         label.setFont(new Font(font, Font.PLAIN, 14));
         return JOptionPane.showOptionDialog(this, label, title, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
     }
 
-    public Object showInputDialog(String msg, Object[] options){
+    public Object showInputDialog(String msg, Object[] options) {
         JLabel label = new JLabel(msg);
         label.setFont(new Font(font, Font.PLAIN, 14));
         return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);

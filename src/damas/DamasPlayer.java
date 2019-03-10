@@ -13,7 +13,7 @@ public class DamasPlayer extends Player {
 
     private final static int MAX_PLAYERS = 2;
 
-    private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS+1);//index 0 is player 0 for ties etc
+    private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS + 1);//index 0 is player 0 for ties etc
 
 
     private final static char P0 = ' ';
@@ -29,33 +29,33 @@ public class DamasPlayer extends Player {
     private final static char P2_UTFQ = '\u29F3';   //utfQ = '\u29ED';//⧭
 
     private DamasPlayer(int n) {
-            switch (n) {
-                case 0:
-                    id = P0;
-                    idQ = P0;
-                    utf = P0;
-                    utfQ = P0;
+        switch (n) {
+            case 0:
+                id = P0;
+                idQ = P0;
+                utf = P0;
+                utfQ = P0;
 
-                case 1:
-                    id = P1_ID;     //o
-                    idQ = P1_IDQ;    //o
-                    utf = P1_UTF;  //⚪
-                    utfQ = P1_UTFQ; //⧲
-                    break;
-                case 2:
-                    id = P2_ID;
-                    idQ = P2_IDQ;
-                    utf = P2_UTF;  //⚫
-                    utfQ = P2_UTFQ; //⧳
-                    break;
+            case 1:
+                id = P1_ID;     //o
+                idQ = P1_IDQ;    //o
+                utf = P1_UTF;  //⚪
+                utfQ = P1_UTFQ; //⧲
+                break;
+            case 2:
+                id = P2_ID;
+                idQ = P2_IDQ;
+                utf = P2_UTF;  //⚫
+                utfQ = P2_UTFQ; //⧳
+                break;
         }
         players.add(this);
     }
 
-    public static DamasPlayer newPlayer(){
-        if(players.size() == 0)
+    public static DamasPlayer newPlayer() {
+        if (players.size() == 0)
             new DamasPlayer(0);
-        if(players.size() < MAX_PLAYERS+1)
+        if (players.size() < MAX_PLAYERS + 1)
             return new DamasPlayer(players.size());
         return null;
     }
@@ -72,7 +72,7 @@ public class DamasPlayer extends Player {
                 return P2_UTFQ;
             default:
                 return ' ';
-            }
+        }
     }
 
 
@@ -80,8 +80,8 @@ public class DamasPlayer extends Player {
         return players.get(i);
     }
 
-    public static DamasPlayer getPlayer(char c){
-        switch (c){
+    public static DamasPlayer getPlayer(char c) {
+        switch (c) {
             case P1_ID:
             case P1_IDQ:
             case P1_UTF:

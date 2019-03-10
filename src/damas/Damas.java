@@ -27,6 +27,7 @@ public class Damas implements Game {
     private ArrayList<int[]> moves;
     private ArrayList<int[]> attacks;
     private ArrayList<int[]> movats;
+
     public Damas() {
         PLAYER_1 = DamasPlayer.newPlayer();
         PLAYER_2 = DamasPlayer.newPlayer();
@@ -38,7 +39,7 @@ public class Damas implements Game {
 
     @Override
     public void startGame() {
-        if(gamepane == null)
+        if (gamepane == null)
             menu = new damasConsole();
         else menu = new damasWindow();
 
@@ -78,18 +79,18 @@ public class Damas implements Game {
 
             attacks = movats = table.listOfAttackMoves(pieceCoords);
             moves.clear();
-            if (attacks.size() > 0 )
+            if (attacks.size() > 0)
                 table.printBoard();
         } while (movats.size() > 0);
     }
 
-    public class damasConsole implements Damable{
+    public class damasConsole implements Damable {
 
         @Override
         public int pickPiece() {
             table.printBoard();
             println("Player " + ACTIVE_PLAYER.getIdQ() + " Turn.");
-            if(movables.size() == 0) {
+            if (movables.size() == 0) {
                 println("Player " + ACTIVE_PLAYER.getIdQ() + " has no available moves. Check Bugs!");
                 //return;  //catch bugs
             }
@@ -105,7 +106,6 @@ public class Damas implements Game {
 
         @Override
         public int pickMove() {
-
             if (moves.size() > 0) {
                 println("Moves: ");
                 ListManip.printList(moves, true, 1);
@@ -120,17 +120,17 @@ public class Damas implements Game {
             do {
                 move = scanInt("Pick a moveTo:");
             } while (move < 1 || move > movats.size());
-            return move-1;
+            return move - 1;
         }
 
         @Override
         public void gameOver() {
             table.printBoard();
-            System.out.println("Game Over\nWinner is: " + table.isGameOver() );
+            System.out.println("Game Over\nWinner is: " + table.isGameOver());
         }
     }
 
-    public class damasWindow implements Damable{
+    public class damasWindow implements Damable {
 
         @Override
         public int pickPiece() {
@@ -138,7 +138,7 @@ public class Damas implements Game {
         }
 
         @Override
-        public int pickMove() {//DamasPlayer player, int[] coords+
+        public int pickMove() {
             return 0;
         }
 
