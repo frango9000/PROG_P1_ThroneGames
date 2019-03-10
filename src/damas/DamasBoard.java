@@ -27,7 +27,7 @@ public class DamasBoard extends Board {
     private char[][] table;
 
     public DamasBoard() {
-        this(6, 3);
+        this(4, 3);
     }
 
     public DamasBoard(int size, int fronts) {
