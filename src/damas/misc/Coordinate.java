@@ -10,12 +10,6 @@ public class Coordinate implements Comparable<Coordinate> {
 
     private String reference="";
 
-    public static final int PIECE = 0;
-    public static final int MOVE = 1;
-    public static final int EAT = 2;
-
-    private static String action = "";
-
     private static int MAX_COORD;
 
     public Coordinate() {
@@ -34,20 +28,6 @@ public class Coordinate implements Comparable<Coordinate> {
     public Coordinate(int[] coords, String reference) {
         this(coords);
         this.reference = reference;
-    }
-
-    public static void setAction(int i) {
-        switch (i) {
-            case 0:
-                action = "Piece @ ";
-                break;
-            case 1:
-                action = "Move to";
-                break;
-            case 2:
-                action = "Eat";
-                break;
-        }
     }
 
     public static void setMaxCoord(int maxCoord) {
@@ -86,8 +66,6 @@ public class Coordinate implements Comparable<Coordinate> {
         return array;
     }
 
-
-
     public static Coordinate[] pickAMove(ArrayList<int[]> moves,ArrayList<int[]> attacks){
         Coordinate[] array = new Coordinate[moves.size()+attacks.size()];
         if(moves.size()>0)
@@ -100,5 +78,14 @@ public class Coordinate implements Comparable<Coordinate> {
         }
         return array;
     }
+
+    public int getIndexOf(Coordinate[] coords){
+        for (int i = 0; i < coords.length; i++) {
+            if(coords[i] == this)
+                return i;
+        }
+        return -1;
+    }
+
 
 }

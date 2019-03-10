@@ -173,7 +173,7 @@ public class Damas implements Game {
             Coordinate[] movatsArray = Coordinate.pickAMove(moves,attacks);
             Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movatsArray);
 
-            return Arrays.binarySearch(movatsArray,pick);
+            return pick.getIndexOf(movatsArray);
         }
 
         @Override
