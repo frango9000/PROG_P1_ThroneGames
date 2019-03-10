@@ -16,8 +16,8 @@ public class GamePane extends JFrame {
     private String title;
     private String font = "sans-serif";
 
-    private static final int MIN_WIDTH = 500;
-    private static final int MIN_HEIGHT = 500;
+    private static final int MIN_WIDTH = 600;
+    private static final int MIN_HEIGHT = 800;
 
 
     String html = "<html>This is how to get:"

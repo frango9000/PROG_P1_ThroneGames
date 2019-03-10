@@ -6,9 +6,7 @@ import lib.Geometry.Line;
 import lib.Geometry.Point;
 import lib.Math.Algebra;
 import proto.Board;
-import proto.Player;
 import proto.SimplePlayer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -27,7 +25,7 @@ public class DamasBoard extends Board {
     private char[][] table;
 
     public DamasBoard() {
-        this(4, 3);
+        this(8, 3);
     }
 
     public DamasBoard(int size, int fronts) {
@@ -120,7 +118,7 @@ public class DamasBoard extends Board {
                 "td.w{background-color: #" + cellWhite + ";}\n" +
                 "td.b{background-color: #" + cellBlack + ";}\n" +
                 "th{width: 28px;font-size:" + fontSize + "px}\n" +
-                ".bottom{text-align:center;font-size:"+18+"px}" +
+                ".bottom{text-align:center;font-size:" + 18 + "px}" +
                 "</style>\n" +
                 "<body>\n");
 
@@ -151,11 +149,11 @@ public class DamasBoard extends Board {
             board.append("<th>" + (char) (65 + col) + "</th>\n");//last row of letters
         }
         //tail
-        String turnTag = (isGameOver() == null)?"<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:</td></tr>":"";
+        String turnTag = (isGameOver() == null) ? "<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:</td></tr>" : "";
         board.append("</tr>\n" +
                 "</table>\n" +
                 "<table class=\"bottom\">" +
-                 turnTag+
+                turnTag +
                 "</table>" +
                 "Pick a " + Damas.getStage() + ": " +
                 "</body>\n" +

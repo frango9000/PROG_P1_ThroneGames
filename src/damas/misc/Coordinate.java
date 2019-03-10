@@ -8,7 +8,7 @@ public class Coordinate implements Comparable<Coordinate> {
     private int x;
     private int y;
 
-    private String reference="";
+    private String reference = "";
 
     private static int MAX_COORD;
 
@@ -36,7 +36,7 @@ public class Coordinate implements Comparable<Coordinate> {
 
     @Override
     public String toString() {
-        return reference + "( " + (char) (y + 65) + ", " + (MAX_COORD-x) + " )";
+        return reference + "( " + (char) (y + 65) + ", " + (MAX_COORD - x) + " )";
     }
 
     @Override
@@ -61,27 +61,27 @@ public class Coordinate implements Comparable<Coordinate> {
     public static Coordinate[] pickAPiece(ArrayList<int[]> pieces) {
         Coordinate[] array = new Coordinate[pieces.size()];
         for (int i = 0; i < pieces.size(); i++) {
-            array[i] = new Coordinate(pieces.get(i), "Piece @ " );
+            array[i] = new Coordinate(pieces.get(i), "Piece @ ");
         }
         return array;
     }
 
-    public static Coordinate[] pickAMove(ArrayList<int[]> moves,ArrayList<int[]> attacks){
-        Coordinate[] array = new Coordinate[moves.size()+attacks.size()];
-        if(moves.size()>0)
+    public static Coordinate[] pickAMove(ArrayList<int[]> moves, ArrayList<int[]> attacks) {
+        Coordinate[] array = new Coordinate[moves.size() + attacks.size()];
+        if (moves.size() > 0)
             for (int i = 0; i < moves.size(); i++) {
-                array[i] = new Coordinate(moves.get(i), "Move @ " );
+                array[i] = new Coordinate(moves.get(i), "Move @ ");
             }
-        if(attacks.size()>0)
-        for (int i = moves.size(); i < array.length; i++) {
-            array[i] = new Coordinate(attacks.get(i-moves.size()), "Attack @ " );
-        }
+        if (attacks.size() > 0)
+            for (int i = moves.size(); i < array.length; i++) {
+                array[i] = new Coordinate(attacks.get(i - moves.size()), "Attack @ ");
+            }
         return array;
     }
 
-    public int getIndexOf(Coordinate[] coords){
+    public int getIndexOf(Coordinate[] coords) {
         for (int i = 0; i < coords.length; i++) {
-            if(coords[i] == this)
+            if (coords[i] == this)
                 return i;
         }
         return -1;
