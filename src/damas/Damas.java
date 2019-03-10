@@ -5,6 +5,7 @@ import damas.misc.Damable;
 import lib.Data.ListManip;
 import proto.Game;
 import proto.GamePane;
+import proto.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,8 +19,6 @@ public class Damas implements Game {
     private DamasBoard table;
     private DamasPlayer PLAYER_1;
     private DamasPlayer PLAYER_2;
-
-    private DamasPlayer ACTIVE_PLAYER;
 
     private GamePane gamepane=null;
 
@@ -49,7 +48,7 @@ public class Damas implements Game {
 
         int count = 1;
         while (table.isGameOver() == null) {
-            ACTIVE_PLAYER = (count++ % 2 == 1) ? PLAYER_1 : PLAYER_2;
+            DamasPlayer.setActivePlayer((count++ % 2 == 1) ? PLAYER_1 : PLAYER_2);
             nextTurn();
         }
         menu.gameOver();
@@ -62,7 +61,7 @@ public class Damas implements Game {
 
     private void nextTurn() {
         //Pick piece to move
-        movables = table.listOfActionables(ACTIVE_PLAYER);
+        movables = table.listOfActionables(DamasPlayer.getActivePlayer());
         int piece = menu.pickPiece();
         int[] pieceCoords = movables.get(piece);
 
@@ -96,9 +95,9 @@ public class Damas implements Game {
         @Override
         public int pickPiece() {
             table.printBoard();
-            println("Player's " + ACTIVE_PLAYER.getIdQ() + " turn.");
+            println("Player's " + DamasPlayer.getActivePlayer().getIdQ() + " turn.");
             if (movables.size() == 0) {
-                println("Player " + ACTIVE_PLAYER.getIdQ() + " has no available moves. Check Bugs!");
+                println("Player " + DamasPlayer.getActivePlayer().getIdQ() + " has no available moves. Check Bugs!");
                 //return;  //catch bugs
             }
             ListManip.printList(movables, true, 1);
@@ -142,7 +141,7 @@ public class Damas implements Game {
         @Override
         public int pickPiece() {
             String msg = table.toString();
-            msg += "Player's " + ACTIVE_PLAYER.getIdQ() + " turn.";
+            msg += "Player's " + DamasPlayer.getActivePlayer().getIdQ() + " turn.";
             msg += "Move piece: ";
 
             Coordinate.setAction(Coordinate.PIECE);

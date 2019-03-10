@@ -6,6 +6,7 @@ import lib.Geometry.Line;
 import lib.Geometry.Point;
 import lib.Math.Algebra;
 import proto.Board;
+import proto.Player;
 import proto.SimplePlayer;
 
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class DamasBoard extends Board {
         int cellBorder = 0;
 
         int pieceSize = 8 * 32 / rows;
-        int fontSize = 8 * 24 / rows;
+        int fontSize = 8 * 20 / rows;
 
         String cellBlack = "aaaaaa";
         String cellWhite = "dddddd";
@@ -107,24 +108,25 @@ public class DamasBoard extends Board {
         // html header
         board.append("<html>\n" +
                 "<style>\n" +
-                "table{border:solid " + outBorder + "px black;\n" +
+                "table.board{border:solid " + outBorder + "px black;\n" +
                 "border-collapse: collapse;\n" +
                 "table-layout: fixed;\n" +
                 "border-spacing: " + cellSpace + "px;}\n" +
-                "td {border:" + cellBorder + "px solid black;\n" +
+                ".board td {border:" + cellBorder + "px solid black;\n" +
                 "width: " + cellSize + "px;\n" +
                 "height: " + cellSize + "px;\n" +
                 "text-align: center;\n" +
                 "font-size: " + pieceSize + "px;}\n" +
                 "td.w{background-color: #" + cellWhite + ";}\n" +
                 "td.b{background-color: #" + cellBlack + ";}\n" +
-                "th{width: 18px; font-size:" + fontSize + "px}\n" +
+                "th{width: 28px;font-size:" + fontSize + "px}\n" +
+                ".bottom{text-align:center;font-size:"+18+"px}" +
                 "</style>\n" +
                 "<body>\n");
 
         //table and head row with letters
-        board.append("<table>\n" +
-                "<tr class=\"colheader\">\n" +
+        board.append("<table class=\"board\">\n" +
+                "<tr>\n" +
                 "<th> \n" +
                 "</th>\n");
 
@@ -142,11 +144,17 @@ public class DamasBoard extends Board {
                 board.append(((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0)) ? 'b' : 'w');
                 board.append("\">" + DamasPlayer.getCaseSensitiveUTF(table[row][col]) + "</td>\n");
             }
-
+            board.append("<th>" + (table.length - row) + "</th>\n");//last column of numbers
+        }
+        board.append("</tr><tr><th></th>");
+        for (int col = 0; col < table[0].length; col++) {
+            board.append("<th>" + (char) (65 + col) + "</th>\n");//last row of letters
         }
         //tail
         board.append("</tr>\n" +
                 "</table>\n" +
+                "<table class=\"bottom\">" +
+                "<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn: </td></tr></table>" +
                 "</body>\n" +
                 "</html>");
 
