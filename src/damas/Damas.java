@@ -1,7 +1,9 @@
 package damas;
 
+import damas.misc.Damable;
 import lib.Data.ListManip;
 import proto.Game;
+import proto.GamePane;
 
 import java.util.ArrayList;
 
@@ -12,37 +14,40 @@ public class Damas implements Game {
 
 
     DamasBoard table;
-    DamasPlayer p1 = DamasPlayer.PLAYER1;
-    DamasPlayer p2 = DamasPlayer.PLAYER2;
+    private DamasPlayer PLAYER_1 = DamasPlayer.newPlayer();
+    private DamasPlayer PLAYER_2 = DamasPlayer.newPlayer();
 
+    GamePane gamepane;
+
+    Damable menu;
+
+    public Damas() {
+    }
+
+    public void setGamepane(GamePane gamepane) {
+        this.gamepane = gamepane;
+    }
 
     @Override
     public void startGame() {
+        if(gamepane == null)
+            menu = new damasConsole();
+        else menu = new damasWindow();
+
         table = new DamasBoard();
+
         int count = 1;
         while (table.isGameOver() == null) {
-            playerTurn((count++ % 2 == 1) ? p1 : p2);
+            playerTurn((count++ % 2 == 1) ? PLAYER_1 : PLAYER_2);
         }
-        table.printBoard();
-        System.out.println("Game Over\nWinner is: " + table.isGameOver() );
+        menu.gameOver();
     }
 
     private void playerTurn(DamasPlayer player) {
-        table.printBoard();
-        println("Player " + player.getIdQ() + " Turn.");
-        ArrayList<int[]> movables = table.listOfActionables(player);
-        if(movables.size() == 0) {
-            println("Player " + player.getIdQ() + " has no available moves. Check Bugs!");
-            return;
-        }
-        ListManip.printList(movables, true, 1);
-        //pick piece
-        int piece = 0;
-        do {
-            piece = scanInt("Move piece: ");
-        } while (piece < 1 || piece > movables.size());
-        int[] pieceCoords = movables.get(piece - 1);
 
+        ArrayList<int[]> movables = table.listOfActionables(player);
+
+        int[] pieceCoords = movables.get(menu.pickPiece(player) - 1);
         ArrayList<int[]> moves = table.listOfMoves(pieceCoords);
         ArrayList<int[]> attacks = table.listOfAttackMoves(pieceCoords);
         ArrayList<int[]> movats = new ArrayList<>();
@@ -62,15 +67,15 @@ public class Damas implements Game {
 
             int move = 0;
             do {
-                move = scanInt("Pick a move:");
+                move = scanInt("Pick a moveTo:");
             } while (move < 1 || move > movats.size());
             int[] destination = movats.get(move - 1);
 
             if (move <= moves.size()) {
-                table.move(pieceCoords, destination);
+                table.moveTo(pieceCoords, destination);
                 break;
             }
-            table.eat(pieceCoords, destination);
+            table.eatOverTo(pieceCoords, destination);
             pieceCoords = destination;
 
             attacks = table.listOfAttackMoves(pieceCoords);
@@ -81,8 +86,57 @@ public class Damas implements Game {
             if (attacks.size() > 0 )
                 table.printBoard();
         } while (movats.size() > 0);
+    }
 
+    public class damasConsole implements Damable{
 
+        @Override
+        public void gameOver() {
+            table.printBoard();
+            System.out.println("Game Over\nWinner is: " + table.isGameOver() );
+        }
+
+        @Override
+        public int pickPiece(DamasPlayer player) {
+            table.printBoard();
+            println("SimplePlayer " + player.getIdQ() + " Turn.");
+            ArrayList<int[]> movables = table.listOfActionables(player);
+            if(movables.size() == 0) {
+                println("SimplePlayer " + player.getIdQ() + " has no available moves. Check Bugs!");
+                //return;  //catch bugs
+            }
+            ListManip.printList(movables, true, 1);
+
+            //pick piece
+            int piece = 0;
+            do {
+                piece = scanInt("Move piece: ");
+            } while (piece < 1 || piece > movables.size());
+            return piece;
+        }
+
+        @Override
+        public int pickMove() {
+            return 0;
+        }
+    }
+
+    public class damasWindow implements Damable{
+
+        @Override
+        public void gameOver() {
+
+        }
+
+        @Override
+        public int pickPiece(DamasPlayer player) {
+            return 0;
+        }
+
+        @Override
+        public int pickMove() {//DamasPlayer player, int[] coords+
+            return 0;
+        }
     }
 
 
