@@ -13,6 +13,8 @@ public class DamasPlayer extends Player {
 
     private final static int MAX_PLAYERS = 2;
 
+    private static DamasPlayer ACTIVE_PLAYER;
+
     private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS + 1);//index 0 is player 0 for ties etc
 
 
@@ -96,6 +98,14 @@ public class DamasPlayer extends Player {
             default:
                 return players.get(0);
         }
+    }
+
+    public static DamasPlayer getActivePlayer() {
+        return ACTIVE_PLAYER;
+    }
+
+    public static void setActivePlayer(DamasPlayer activePlayer) {
+        ACTIVE_PLAYER = activePlayer;
     }
 
     public char getId() {
