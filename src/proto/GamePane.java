@@ -1,22 +1,24 @@
 package proto;
 
-import damas.Damas;
 import damas.DamasBoard;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePane {
+public class GamePane  extends JFrame{
     public static void main(String[] args) {
         GamePane gp = new GamePane();
 
         DamasBoard d = new DamasBoard();
-        gp.showGamePane(d.toString());
+        gp.showMessageDialog(d.toString());
     }
 
     private String title;
-    private JOptionPane frame;
-    private String font;
+    private String font = "sans-serif";
+
+    private static final int MIN_WIDTH = 500;
+    private static final int MIN_HEIGHT = 500;
+
 
     String html = "<html>This is how to get:"
             + "<ul><li><i>italics</i> and "
@@ -36,56 +38,41 @@ public class GamePane {
             "</style>\n" +
             "<body>\n" +
             "<table>\n" +
-            "<tr class=\"colheader\">\n" +
-            "<th> </th>\n" +
-            "<th>A</th>\n" +
-            "<th>B</th>\n" +
-            "<th>C</th>\n" +
-            "<th>D</th>\n" +
-            "<th>E</th>\n" +
-            "<th>F</th>\n" +
-            "<th>G</th>\n" +
-            "<th>H</th>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>8</th>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "</tr>\n" +
-            "<tr>\n" +
-            "<th>7</th>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-            "<td class=\"b\"></td>\n" +
-            "<td class=\"w\"></td>\n" +
-
-            "</tr>\n" +
             "</table>\n" +
             "</body>\n" +
             "</html>";
 
     public GamePane() {
-        UIManager.put("OptionPane.minimumSize",new Dimension(500,500));
-
+        UIManager.put("OptionPane.minimumSize",new Dimension(MIN_WIDTH, MIN_HEIGHT));
         title = "Juegos Reunidos";
-        frame = new JOptionPane();
-        String font = "sans-serif";
-
     }
 
-    public void showGamePane(String msg){
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void showMessageDialog(String msg){
         JLabel label = new JLabel(msg);
         label.setFont(new Font(font, Font.PLAIN, 14));
-        JOptionPane.showMessageDialog(frame, label, title, JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(this, label, title, JOptionPane.PLAIN_MESSAGE);
     }
+
+    public int showOptionsDialog(String msg, String[] options){
+        JLabel label = new JLabel(msg);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        return JOptionPane.showOptionDialog(this, label, title, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+    }
+
+    public Object showInputDialog(String msg, Object[] options){
+        JLabel label = new JLabel(msg);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
+    }
+
 }
