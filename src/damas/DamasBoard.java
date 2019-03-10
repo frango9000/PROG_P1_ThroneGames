@@ -25,7 +25,11 @@ public class DamasBoard extends Board {
     private char[][] table;
 
     public DamasBoard() {
-        this(8, 3);
+        this(8, 9);
+    }
+
+    public DamasBoard(int size) {
+        this(size, size);
     }
 
     public DamasBoard(int size, int fronts) {
@@ -99,8 +103,8 @@ public class DamasBoard extends Board {
         String cellWhite = "dddddd";
         String cellHighlight = "";
 
-        int totalWidth = 400;
-        int cellSize = totalWidth / rows;
+        int totalWidth = 500;
+        int cellSize = totalWidth / rows+2;
 
         StringBuilder board = new StringBuilder();
         // html header
