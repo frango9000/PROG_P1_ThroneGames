@@ -27,7 +27,7 @@ public class DamasBoard extends Board {
     private char[][] table;
 
     public DamasBoard() {
-        this(8, 3);
+        this(6, 3);
     }
 
     public DamasBoard(int size, int fronts) {
@@ -151,10 +151,13 @@ public class DamasBoard extends Board {
             board.append("<th>" + (char) (65 + col) + "</th>\n");//last row of letters
         }
         //tail
+        String turnTag = (isGameOver() == null)?"<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:</td></tr>":"";
         board.append("</tr>\n" +
                 "</table>\n" +
                 "<table class=\"bottom\">" +
-                "<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn: </td></tr></table>" +
+                 turnTag+
+                "</table>" +
+                "Pick a " + Damas.getStage() + ": " +
                 "</body>\n" +
                 "</html>");
 

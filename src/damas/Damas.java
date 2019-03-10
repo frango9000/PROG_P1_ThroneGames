@@ -5,7 +5,6 @@ import damas.misc.Damable;
 import lib.Data.ListManip;
 import proto.Game;
 import proto.GamePane;
-import proto.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +22,8 @@ public class Damas implements Game {
     private GamePane gamepane=null;
 
     private Damable menu;
+
+    private static String stage ="";
 
     private ArrayList<int[]> movables;
     private ArrayList<int[]> moves;
@@ -59,24 +60,47 @@ public class Damas implements Game {
         this.gamepane = gamepane;
     }
 
+    public static String getStage() {
+        return stage;
+    }
+
+    public static void setStage(int n) {
+        switch(n){
+            case 0:
+                stage = "piece";break;//pick a piece
+            case 1:
+                stage = "move";break;
+        }
+    }
+
     private void nextTurn() {
         //Pick piece to move
+        setStage(0);
         movables = table.listOfActionables(DamasPlayer.getActivePlayer());
+        if (movables.size() == 0) {
+            println("Player " + DamasPlayer.getActivePlayer().getIdQ() + " has no pieces to moves. Check Bugs!");
+            return;
+        }
         int piece = menu.pickPiece();
         int[] pieceCoords = movables.get(piece);
 
         //Pick Move
+        setStage(1);
         moves = table.listOfMoves(pieceCoords);
         attacks = table.listOfAttackMoves(pieceCoords);
         movats = new ArrayList<>();
         movats.addAll(moves);
         movats.addAll(attacks);
+        if (movats.size() == 0) {
+            println("Player " + DamasPlayer.getActivePlayer().getIdQ() + " has no available moves. Check Bugs!");
+            return;
+        }
 
         do {
             int move = menu.pickMove();
             int[] destination = movats.get(move);
 
-            if (move <= moves.size()) {
+            if (move < moves.size()) {
                 table.moveTo(pieceCoords, destination);
                 break;
             }
@@ -85,9 +109,7 @@ public class Damas implements Game {
 
             attacks = movats = table.listOfAttackMoves(pieceCoords);
             moves.clear();
-            if (attacks.size() > 0)
-                table.printBoard();
-        } while (movats.size() > 0);
+        } while (movats.size() > 0 && table.isGameOver() == null);
     }
 
     public class damasConsole implements Damable {
@@ -96,10 +118,7 @@ public class Damas implements Game {
         public int pickPiece() {
             table.printBoard();
             println("Player's " + DamasPlayer.getActivePlayer().getIdQ() + " turn.");
-            if (movables.size() == 0) {
-                println("Player " + DamasPlayer.getActivePlayer().getIdQ() + " has no available moves. Check Bugs!");
-                //return;  //catch bugs
-            }
+
             ListManip.printList(movables, true, 1);
 
             //pick piece
@@ -141,22 +160,26 @@ public class Damas implements Game {
         @Override
         public int pickPiece() {
             String msg = table.toString();
-            msg += "Player's " + DamasPlayer.getActivePlayer().getIdQ() + " turn.";
-            msg += "Move piece: ";
 
-            Coordinate.setAction(Coordinate.PIECE);
-            Coordinate[] movablesArray = Coordinate.toArray(movables);
+            Coordinate[] movablesArray = Coordinate.pickAPiece(movables);
             Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movablesArray);
             return Arrays.binarySearch(movablesArray,pick);
         }
 
         @Override
         public int pickMove() {
-            return 0;
+            String msg = table.toString();
+
+            Coordinate[] movatsArray = Coordinate.pickAMove(moves,attacks);
+            Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movatsArray);
+
+            return Arrays.binarySearch(movatsArray,pick);
         }
 
         @Override
         public void gameOver() {
+            String msg = table.toString();
+            gamepane.showMessageDialog(msg);
 
         }
     }
