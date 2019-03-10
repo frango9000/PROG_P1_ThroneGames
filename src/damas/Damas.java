@@ -1,11 +1,13 @@
 package damas;
 
+import damas.misc.Coordinate;
 import damas.misc.Damable;
 import lib.Data.ListManip;
 import proto.Game;
 import proto.GamePane;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static lib.Misc.IO.println;
 import static lib.Misc.IO.scanInt;
@@ -19,7 +21,7 @@ public class Damas implements Game {
 
     private DamasPlayer ACTIVE_PLAYER;
 
-    private GamePane gamepane;
+    private GamePane gamepane=null;
 
     private Damable menu;
 
@@ -51,6 +53,11 @@ public class Damas implements Game {
             nextTurn();
         }
         menu.gameOver();
+    }
+
+    @Override
+    public void setGamePane(GamePane gamepane) {
+        this.gamepane = gamepane;
     }
 
     private void nextTurn() {
@@ -89,7 +96,7 @@ public class Damas implements Game {
         @Override
         public int pickPiece() {
             table.printBoard();
-            println("Player " + ACTIVE_PLAYER.getIdQ() + " Turn.");
+            println("Player's " + ACTIVE_PLAYER.getIdQ() + " turn.");
             if (movables.size() == 0) {
                 println("Player " + ACTIVE_PLAYER.getIdQ() + " has no available moves. Check Bugs!");
                 //return;  //catch bugs
@@ -118,7 +125,7 @@ public class Damas implements Game {
 
             int move = 0;
             do {
-                move = scanInt("Pick a moveTo:");
+                move = scanInt("Pick a move:");
             } while (move < 1 || move > movats.size());
             return move - 1;
         }
@@ -134,7 +141,14 @@ public class Damas implements Game {
 
         @Override
         public int pickPiece() {
-            return 0;
+            String msg = table.toString();
+            msg += "Player's " + ACTIVE_PLAYER.getIdQ() + " turn.";
+            msg += "Move piece: ";
+
+            Coordinate.setAction(Coordinate.PIECE);
+            Coordinate[] movablesArray = Coordinate.toArray(movables);
+            Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movablesArray);
+            return Arrays.binarySearch(movablesArray,pick);
         }
 
         @Override

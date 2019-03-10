@@ -31,6 +31,7 @@ public class Menu {
                 break;
         }
         gamepane.setTitle(selection);
+        game.setGamePane(gamepane);
         game.startGame();
     }
 }

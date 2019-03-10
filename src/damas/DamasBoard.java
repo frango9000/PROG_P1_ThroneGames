@@ -1,5 +1,6 @@
 package damas;
 
+import damas.misc.Coordinate;
 import damas.misc.CoordinatesComparator;
 import lib.Geometry.Line;
 import lib.Geometry.Point;
@@ -34,6 +35,8 @@ public class DamasBoard extends Board {
         this.fronts = fronts;
         this.fronts = Algebra.min(fronts, (rows / 2) - 1);
         table = new char[rows][cols];
+
+        Coordinate.setMaxCoord(size);
         clearBoard();
     }
 
