@@ -40,7 +40,7 @@ public class DamasPlayer extends Player {
 
             case 1:
                 id = P1_ID;     //o
-                idQ = P1_IDQ;    //o
+                idQ = P1_IDQ;    //O
                 utf = P1_UTF;  //⚪
                 utfQ = P1_UTFQ; //⧲
                 break;

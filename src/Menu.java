@@ -8,7 +8,7 @@ public class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"Damas", "3 en linea"};
+    private String[] games = {"Damas", "3 en linea", "Ahorcado", "Piedra Papel o Tijera", "Damas"};
 
     public Menu() {
         gamepane = new GamePane();
