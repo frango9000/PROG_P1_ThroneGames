@@ -19,11 +19,11 @@ public class Damas implements Game {
     private DamasPlayer PLAYER_1;
     private DamasPlayer PLAYER_2;
 
-    private GamePane gamepane=null;
+    private GamePane gamepane = null;
 
     private Damable menu;
 
-    private static String stage ="";
+    private static String stage = "";
 
     private ArrayList<int[]> movables;
     private ArrayList<int[]> moves;
@@ -65,11 +65,13 @@ public class Damas implements Game {
     }
 
     public static void setStage(int n) {
-        switch(n){
+        switch (n) {
             case 0:
-                stage = "piece";break;//pick a piece
+                stage = "piece";
+                break;//pick a piece
             case 1:
-                stage = "move";break;
+                stage = "move";
+                break;
         }
     }
 
@@ -162,16 +164,16 @@ public class Damas implements Game {
             String msg = table.toString();
 
             Coordinate[] movablesArray = Coordinate.pickAPiece(movables);
-            Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movablesArray);
-            return Arrays.binarySearch(movablesArray,pick);
+            Coordinate pick = (Coordinate) gamepane.showInputDialog(msg, movablesArray);
+            return Arrays.binarySearch(movablesArray, pick);
         }
 
         @Override
         public int pickMove() {
             String msg = table.toString();
 
-            Coordinate[] movatsArray = Coordinate.pickAMove(moves,attacks);
-            Coordinate pick = (Coordinate)gamepane.showInputDialog(msg, movatsArray);
+            Coordinate[] movatsArray = Coordinate.pickAMove(moves, attacks);
+            Coordinate pick = (Coordinate) gamepane.showInputDialog(msg, movatsArray);
 
             return pick.getIndexOf(movatsArray);
         }
