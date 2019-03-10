@@ -3,18 +3,21 @@ import proto.Game;
 import proto.GamePane;
 import treslinea.TresEnLinea;
 
+import java.io.File;
+
 
 public class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"Damas", "3 en linea", "Ahorcado", "Piedra Papel o Tijera", "Damas"};
+    private String[] games = {"3 en linea", "Ahorcado", "Piedra Papel o Tijera","Damas"};
 
     public Menu() {
         gamepane = new GamePane();
     }
 
     public void gamesMenu() {
+
         String selection = (String) gamepane.showInputDialog("Elige un juego", games);
 
         Game game;
@@ -24,6 +27,12 @@ public class Menu {
                 game = new Damas();
                 break;
             case "3 en Linea":
+                game = new TresEnLinea();
+                break;
+            case "Ahorcado":
+                game = new Damas();
+                break;
+            case "Piedra Papel o Tijera":
                 game = new TresEnLinea();
                 break;
             default:

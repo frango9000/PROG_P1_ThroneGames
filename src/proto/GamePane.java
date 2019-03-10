@@ -4,6 +4,7 @@ import damas.DamasBoard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class GamePane extends JFrame {
     public static void main(String[] args) {
@@ -19,6 +20,7 @@ public class GamePane extends JFrame {
     private static final int MIN_WIDTH = 600;
     private static final int MIN_HEIGHT = 800;
 
+    File f = new File("img/logo.jpg");
 
     String html = "<html>This is how to get:"
             + "<ul><li><i>italics</i> and "
