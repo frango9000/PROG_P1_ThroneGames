@@ -3,7 +3,6 @@ import proto.Game;
 import proto.GamePane;
 import treslinea.TresEnLinea;
 
-import javax.swing.*;
 
 public class Menu {
 

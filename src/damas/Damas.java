@@ -14,14 +14,16 @@ public class Damas implements Game {
 
 
     DamasBoard table;
-    private DamasPlayer PLAYER_1 = DamasPlayer.newPlayer();
-    private DamasPlayer PLAYER_2 = DamasPlayer.newPlayer();
+    private DamasPlayer PLAYER_1;
+    private DamasPlayer PLAYER_2;
 
     GamePane gamepane;
 
     Damable menu;
 
     public Damas() {
+        PLAYER_1 = DamasPlayer.newPlayer();
+        PLAYER_2 = DamasPlayer.newPlayer();
     }
 
     public void setGamepane(GamePane gamepane) {
