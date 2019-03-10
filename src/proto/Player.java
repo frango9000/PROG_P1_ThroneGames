@@ -1,7 +1,7 @@
 package proto;
 
 public class Player implements IPlayer,
-                               Comparable<Player> {
+        Comparable<Player> {
 
     private char id;
 
