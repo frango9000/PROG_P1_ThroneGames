@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class DamasPlayer extends Player {
 
-    char id;
-    char idQ;
-    char utf;
-    char utfQ;
+    private char id;
+    private char idQ;
+    private char utf;
+    private char utfQ;
 
-    public final static int MAX_PLAYERS = 2;
+    private final static int MAX_PLAYERS = 2;
 
-    public static DamasPlayer[] players = new DamasPlayer[MAX_PLAYERS+1];//index 0 is player 0 for ties etc
+    private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS+1);//index 0 is player 0 for ties etc
 
 
     private final static char P0 = ' ';
@@ -29,7 +29,6 @@ public class DamasPlayer extends Player {
     private final static char P2_UTFQ = '\u29F3';   //utfQ = '\u29ED';//⧭
 
     private DamasPlayer(int n) {
-        if(players[n] != null ) {
             switch (n) {
                 case 0:
                     id = P0;
@@ -49,19 +48,15 @@ public class DamasPlayer extends Player {
                     utf = P2_UTF;  //⚫
                     utfQ = P2_UTFQ; //⧳
                     break;
-            }
-            players[n] = this;
         }
+        players.add(this);
     }
 
     public static DamasPlayer newPlayer(){
-        if(players[0] == null)
-            players[0] = new DamasPlayer(0);
-        for (int i = 1; i < players.length; i++) {
-            if(players[i] == null)
-                return players[i] = new DamasPlayer(i);
-
-        }
+        if(players.size() == 0)
+            new DamasPlayer(0);
+        if(players.size() < MAX_PLAYERS+1)
+            return new DamasPlayer(players.size());
         return null;
     }
 
@@ -82,7 +77,7 @@ public class DamasPlayer extends Player {
 
 
     public static DamasPlayer getPlayer(int i) {
-        return players[--i];
+        return players.get(i);
     }
 
     public static DamasPlayer getPlayer(char c){
@@ -91,15 +86,15 @@ public class DamasPlayer extends Player {
             case P1_IDQ:
             case P1_UTF:
             case P1_UTFQ:
-                return players[1];
+                return players.get(1);
 
             case P2_ID:
             case P2_IDQ:
             case P2_UTF:
             case P2_UTFQ:
-                return players[2];
+                return players.get(2);
             default:
-                return players[0];
+                return players.get(0);
         }
     }
 
