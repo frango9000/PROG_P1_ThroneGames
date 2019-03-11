@@ -124,27 +124,26 @@ public class DamasBoard extends Board {
                 "th{width: 28px;font-size:" + fontSize + "px}\n" +
                 ".bottom{text-align:center;font-size:" + 18 + "px}" +
                 "</style>\n" +
-                "<body>\n");
+                "<body>\n" +
+                "<table class=\"board\">\n");
 
-        //table and head row with letters
-        board.append("<table class=\"board\">\n" +
-                "<tr>\n" +
-                "<th> \n" +
-                "</th>\n");
-
+        //head row with letters
+        board.append("<tr>\n" +
+                "<th></th>\n");
         for (int col = 0; col < table[0].length; col++) {
             board.append("<th>" + (char) (65 + col) + "</th>\n");
         }
+        board.append("</tr>");
+
 
         //all rows with number
         for (int row = 0; row < table.length; row++) {
-            board.append("</tr>\n" +
-                    "<tr>\n" +
+            board.append("<tr>\n" +
                     "<th>" + (table.length - row) + "</th>\n");
-            for (int col = 0; col < table[row].length; col++) {
+            for (int cell = 0; cell < table[row].length; cell++) {
                 board.append("<td class=\"");
-                board.append(((row % 2 != 0 && col % 2 == 0) || (row % 2 == 0 && col % 2 != 0)) ? 'b' : 'w');
-                board.append("\">" + DamasPlayer.getCaseSensitiveUTF(table[row][col]) + "</td>\n");
+                board.append(((row % 2 != 0 && cell % 2 == 0) || (row % 2 == 0 && cell % 2 != 0)) ? 'b' : 'w');
+                board.append("\">" + DamasPlayer.getCaseSensitiveUTF(table[row][cell]) + "</td>\n");
             }
             board.append("<th>" + (table.length - row) + "</th>\n");//last column of numbers
         }

@@ -1,6 +1,7 @@
 package treslinea;
 
 import damas.misc.Coordinate;
+import lib.Math.Algebra;
 import proto.Board;
 import proto.SimplePlayer;
 
@@ -9,10 +10,13 @@ import java.util.Arrays;
 
 public class TresEnLineaBoard extends Board {
 
-
     public TresEnLineaBoard() {
-        rows = 3;
-        cols = 3;
+        this(3);
+    }
+
+    public TresEnLineaBoard(int size) {
+        rows = size;
+        cols = size;
         table = new char[rows][cols];
         clearBoard();
     }
@@ -34,23 +38,74 @@ public class TresEnLineaBoard extends Board {
     }
 
     public void printBoard() {
-        String line = "-------------";
+        String line = "-";
+        for (int i = 0; i < table.length; i++) {
+            line += "----";
+        }
         System.out.println(line);
         for (char[] chars : table) {
-            System.out.printf("| %c | %c | %c |%n", chars[0], chars[1], chars[2]);
-            System.out.println(line);
+            for (int i = 0; i < chars.length; i++) {
+                System.out.printf("| %c ", chars[i]);
+
+            }
+            System.out.println(" |%n" + line);
         }
 
     }
 
     public String toString(){
-        String line = "-------------\n";
-        String str = line;
-        for (char[] chars : table) {
-            str += String.format("| %c | %c | %c |%n", chars[0], chars[1], chars[2]);
-            str += line;
+        StringBuilder str = new StringBuilder("<html>\n" +
+                "<style>\n" +
+                "table{border-collapse: collapse;}\n" +
+                "td{border:solid black 4px;\n" +
+                "width: 70px;\n" +
+                "height: 70px;}\n" +
+                "th{width: 30px}\n" +
+                ".top{border-top: none;}\n" +
+                ".bot{border-bottom: none;}\n" +
+                "#left{border-left: none;}\n" +
+                "#right{border-right: none;}\n" +
+                "</style>\n" +
+                "<table>\n");
+
+        //first row of the table is a header (letter coords)
+        str.append("<tr>\n");
+        str.append("<th></th>\n");
+        for (int col = 0; col < table.length; col++) {
+            str.append("<th>" + (char) (65 + col) + "</th>\n");
         }
-        return str;
+        str.append("</tr>\n");
+
+        //all rows of the table with an extra first column (number coords)
+        for (int row = 0; row < table.length; row++) {
+            str.append("<tr>\n");
+            str.append("<th>"+(row+1)+"</th>\n");
+            str.append("</tr>\n");
+            str.append("<tr>\n");
+            for (int cell = -1; cell < table[row].length; cell++) {//all cells on each row
+                str.append("<td\n");
+                if(row == 0)
+                    str.append(" class=\"top\"");
+                else if(row == table.length-1)
+                    str.append(" class=\"bot\"");
+
+                if(cell == 0)
+                    str.append(" id=\"left\"");
+                else if(cell == table[row].length-1)
+                    str.append(" id=\"right\"");
+
+                str.append(">");
+                //str.append((cell==-1)?"":table[row][cell]);
+                str.append("</td>\n");
+            }
+            str.append("</tr>\n");
+        }
+
+        //close html
+        str.append("</table>\n" +
+                "</html>");
+
+        return str.toString();
     }
 
     public ArrayList<int[]> moves(){
@@ -71,7 +126,6 @@ public class TresEnLineaBoard extends Board {
 
         for (int i = 0; i < moves.size(); i++) {
             array[i] = new Coordinate(moves.get(i));
-
         }
         return array;
     }
