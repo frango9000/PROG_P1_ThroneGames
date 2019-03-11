@@ -6,7 +6,6 @@ import lib.Geometry.Line;
 import lib.Geometry.Point;
 import lib.Math.Algebra;
 import proto.Board;
-import proto.SimplePlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +32,7 @@ public class DamasBoard extends Board {
         this(size, size);
     }
 
-    public DamasBoard(int size, int fronts) {
+    private DamasBoard(int size, int fronts) {
         this.rows = size;
         this.cols = size;
         this.fronts = fronts;
@@ -76,9 +75,9 @@ public class DamasBoard extends Board {
     public void printBoard() {
         //line
 
-        String line = "-";
+        StringBuilder line = new StringBuilder("-");
         for (int i = 0; i < cols; i++) {
-            line += "----";
+            line.append("----");
         }
 
         System.out.println(line);
@@ -107,9 +106,7 @@ public class DamasBoard extends Board {
         int totalWidth = 300;
         int cellSize = totalWidth / rows + 2;
 
-        StringBuilder board = new StringBuilder();
-        // html header
-        board.append("<html>\n" +
+        StringBuilder board = new StringBuilder("<html>\n" +
                 "<style>\n" +
                 "table.board{border:solid " + outBorder + "px black;\n" +
                 "border-collapse: collapse;\n" +
@@ -132,36 +129,28 @@ public class DamasBoard extends Board {
         board.append("<tr>\n" +
                 "<th></th>\n");
         for (int col = 0; col < table[0].length; col++) {
-            board.append("<th>" + (char) (65 + col) + "</th>\n");
+            board.append("<th>").append((char) (65 + col)).append("</th>\n");
         }
         board.append("</tr>");
 
 
         //all rows with number
         for (int row = 0; row < table.length; row++) {
-            board.append("<tr>\n" +
-                    "<th>" + (table.length - row) + "</th>\n");
+            board.append("<tr>\n" + "<th>").append(table.length - row).append("</th>\n");
             for (int cell = 0; cell < table[row].length; cell++) {
                 board.append("<td class=\"");
                 board.append(((row % 2 != 0 && cell % 2 == 0) || (row % 2 == 0 && cell % 2 != 0)) ? 'b' : 'w');
-                board.append("\">" + DamasPlayer.getCaseSensitiveUTF(table[row][cell]) + "</td>\n");
+                board.append("\">").append(DamasPlayer.getCaseSensitiveUTF(table[row][cell])).append("</td>\n");
             }
-            board.append("<th>" + (table.length - row) + "</th>\n");//last column of numbers
+            board.append("<th>").append(table.length - row).append("</th>\n");//last column of numbers
         }
         board.append("</tr><tr><th></th>");
         for (int col = 0; col < table[0].length; col++) {
-            board.append("<th>" + (char) (65 + col) + "</th>\n");//last row of letters
+            board.append("<th>").append((char) (65 + col)).append("</th>\n");//last row of letters
         }
         //tail
         String turnTag = (isGameOver() == null) ? "<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:</td></tr>" : "";
-        board.append("</tr>\n" +
-                "</table>\n" +
-                "<table class=\"bottom\">" +
-                turnTag +
-                "</table>" +
-                "Pick a " + Damas.getStage() + ": " +
-                "</body>\n" +
-                "</html>");
+        board.append("</tr>\n" + "</table>\n" + "<table class=\"bottom\">").append(turnTag).append("</table>").append("Pick a ").append(Damas.getStage()).append(": ").append("</body>\n").append("</html>");
 
 
         return board.toString();
@@ -185,13 +174,8 @@ public class DamasBoard extends Board {
     }
 
     @Override
-    public boolean validTurn(int[] coords, SimplePlayer player) {
+    public boolean validTurn() {
         return false;
-    }
-
-    @Override
-    public void doTurn(int[] coords, SimplePlayer player) {
-
     }
 
     public ArrayList<int[]> listOfMoves(int[] coords) {
@@ -224,7 +208,7 @@ public class DamasBoard extends Board {
         return moves;
     }
 
-    public ArrayList<int[]> listOfMovables(DamasPlayer player) {
+    private ArrayList<int[]> listOfMovables(DamasPlayer player) {
         ArrayList<int[]> pieces = listOfPieces(player);
         ArrayList<int[]> movables = new ArrayList<>();
 
@@ -235,7 +219,7 @@ public class DamasBoard extends Board {
         return movables;
     }
 
-    public ArrayList<int[]> listOfAttackers(DamasPlayer player) {
+    private ArrayList<int[]> listOfAttackers(DamasPlayer player) {
         ArrayList<int[]> pieces = listOfPieces(player);
         ArrayList<int[]> attackers = new ArrayList<>();
 
@@ -259,7 +243,7 @@ public class DamasBoard extends Board {
     }
 
 
-    public ArrayList<int[]> listOfPieces(DamasPlayer player) {
+    private ArrayList<int[]> listOfPieces(DamasPlayer player) {
         ArrayList<int[]> lista = new ArrayList<>();
         for (int row = 0; row < table.length; row++) {
             for (int col = 0; col < table[row].length; col++) {
@@ -270,11 +254,11 @@ public class DamasBoard extends Board {
         return lista;
     }
 
-    public boolean isMovable(int[] coords) {
+    private boolean isMovable(int[] coords) {
         return canMoveUpLeft(coords) || canMoveUpRight(coords) || canMoveDownLeft(coords) || canMoveDownRight(coords);
     }
 
-    public boolean canMoveUpLeft(int[] coords) {
+    private boolean canMoveUpLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x == 0 || table[x][y] == PLAYER_2.getId())//top row cant go above / PLAYER_2 pawn cant go above
@@ -285,7 +269,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canMoveUpRight(int[] coords) {
+    private boolean canMoveUpRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x == 0 || table[x][y] == PLAYER_2.getId())//top row cant go above / PLAYER_2 pawn cant go above
@@ -296,7 +280,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canMoveDownLeft(int[] coords) {
+    private boolean canMoveDownLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x == table.length - 1 || table[x][y] == PLAYER_1.getId())//last row, cant go below / PLAYER_1 pawn cant go below
@@ -307,7 +291,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canMoveDownRight(int[] coords) {
+    private boolean canMoveDownRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x == table.length - 1 || table[x][y] == PLAYER_1.getId())//last row, cant go below / PLAYER_1 pawn cant go below
@@ -328,11 +312,11 @@ public class DamasBoard extends Board {
         queenPawnIfRoyal(newX, newY);
     }
 
-    public boolean canEat(int[] coords) {
+    private boolean canEat(int[] coords) {
         return canEatUpLeft(coords) || canEatUpRight(coords) || canEatDownLeft(coords) || canEatDownRight(coords);
     }
 
-    public boolean canEatUpLeft(int[] coords) {
+    private boolean canEatUpLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x <= 1 || table[x][y] == PLAYER_2.getId())//top 2 rows cant eatOverTo above / PLAYER_2 pawn cant eatOverTo above
@@ -344,7 +328,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canEatUpRight(int[] coords) {
+    private boolean canEatUpRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x <= 1 || table[x][y] == PLAYER_2.getId())//top 2 rows cant eatOverTo above / PLAYER_2 pawn cant eatOverTo above
@@ -356,7 +340,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canEatDownLeft(int[] coords) {
+    private boolean canEatDownLeft(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         if (x >= this.table.length - 2 || table[x][y] == PLAYER_1.getId())//bot 2 rows cant eatOverTo below / PLAYER_1 pawn cant eatOverTo below
@@ -368,7 +352,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public boolean canEatDownRight(int[] coords) {
+    private boolean canEatDownRight(int[] coords) {
         int x = coords[0];
         int y = coords[1];
         char piece = table[x][y];
@@ -380,7 +364,7 @@ public class DamasBoard extends Board {
         return false;
     }
 
-    public char[][] eatOverTo(int[] piece, int[] moveTo) {
+    public void eatOverTo(int[] piece, int[] moveTo) {
 
         char[][] tab = new char[table.length][table[0].length];
         System.arraycopy(table, 0, tab, 0, tab.length);
@@ -399,11 +383,10 @@ public class DamasBoard extends Board {
         tab[x][y] = tab[eatX][eatY] = ' ';
 
         queenPawnIfRoyal(newX, newY);
-        return tab;
     }
 
 
-    public void queenPawnIfRoyal(int x, int y) {
+    private void queenPawnIfRoyal(int x, int y) {
         if ((x == 0) && (table[x][y] == PLAYER_1.getId()))
             table[x][y] = PLAYER_1.getIdQ();
         else if (x == table.length - 1 && table[x][y] == PLAYER_2.getId())

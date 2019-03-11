@@ -10,10 +10,10 @@ import java.util.InputMismatchException;
 
 public class TresEnLinea implements Game {
 
-    public static boolean CONSOLE = true;
-    TresEnLineaBoard game;
+    private static boolean CONSOLE = true;
+    private TresEnLineaBoard game;
 
-    GamePane gamepane = null;
+    private GamePane gamepane = null;
 
     public static void main(String[] args) {
         TresEnLinea tnl = new TresEnLinea();
@@ -40,20 +40,20 @@ public class TresEnLinea implements Game {
         CONSOLE = false;
     }
 
-    public void playerTurn(SimplePlayer player) {
+    private void playerTurn(SimplePlayer player) {
         Coordinate pick;
-        boolean valid = false;
+        boolean valid;
         do {
             if (CONSOLE)
                 pick = enterCoordsC(player);
             else
-                pick = enterCoords(player);
+                pick = enterCoords();
             valid = game.validTurn(pick);
         } while (!valid);
         game.doTurn(pick, player);
     }
 
-    public Coordinate enterCoords(SimplePlayer player) {
+    private Coordinate enterCoords() {
         Coordinate pick;
         String board = game.toString();
         //board += "\n<html>Player's " + player.getId() + " turn\n";
@@ -67,7 +67,7 @@ public class TresEnLinea implements Game {
         gamepane.showMessageDialog(game.toString());
     }
 
-    public Coordinate enterCoordsC(SimplePlayer simplePlayer) {
+    private Coordinate enterCoordsC(SimplePlayer simplePlayer) {
         game.printBoard();
         int x = 0, y = 0;
         do {

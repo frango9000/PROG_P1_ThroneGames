@@ -9,16 +9,16 @@ import java.util.Scanner;
 
 public class PiedraPapelTijera implements Game {
 
-    static String[] msjRonda = {"Empate! " + "\n\n", "Ganaste la ronda!  " + "\n\n", "Perdiste la ronda! " + "\n\n"};
+    private static String[] msjRonda = {"Empate! " + "\n\n", "Ganaste la ronda!  " + "\n\n", "Perdiste la ronda! " + "\n\n"};
     Scanner scan = new Scanner(System.in);
-    String[] jugadas = {"Piedra", "Papel", "Tijera"};
-    int contRonda = 0;
-    int win = 0;
-    int lose = 0;
-    int tie = 0;
-    String marcador = " ";
-    int contMarcador = 0;
-    JFrame frame = new JFrame();
+    private String[] jugadas = {"Piedra", "Papel", "Tijera"};
+    private int contRonda = 0;
+    private int win = 0;
+    private int lose = 0;
+    private int tie = 0;
+    private String marcador = " ";
+    private int contMarcador = 0;
+    private JFrame frame = new JFrame();
     private GamePane gamepane = null;
 
     @Override
@@ -34,16 +34,15 @@ public class PiedraPapelTijera implements Game {
 
     @Override
     public void setGamePane(GamePane gamePane) {
-        this.gamepane = gamepane;
     }
 
-    public String generarJugadaM() {
+    private String generarJugadaM() {
         contMarcador += 1;
         Random r = new Random();
         return jugadas[r.nextInt(3)];
     }
 
-    public String preguntarJugadaU() {
+    private String preguntarJugadaU() {
         marcador = marcador + " Marcador: " + "\n\n" + "Rondas Ganadas: " + win + "\n" + "Rondas Perdidas: " + lose + "\n" + "Rondas Empatadas: " + tie;
         int jugadaU = JOptionPane.showOptionDialog(frame, marcador + "\n\n" + "Selecciona tu proxima jugada", "Ronda: " + contMarcador, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, jugadas, jugadas[0]);
         if (jugadaU == -1)
@@ -51,7 +50,7 @@ public class PiedraPapelTijera implements Game {
         return jugadas[jugadaU];
     }
 
-    public int compararJugadas(String jugadaM, String jugada) {
+    private int compararJugadas(String jugadaM, String jugada) {
 
         String[] jugadas2 = {"Tijera", "Piedra", "Papel"};
 
@@ -73,7 +72,7 @@ public class PiedraPapelTijera implements Game {
         return 3;
     }
 
-    public void arbitro(int resultado) {
+    private void arbitro(int resultado) {
         if (resultado == 0) {
             marcador = msjRonda[0];
             tie += 1;
@@ -94,11 +93,11 @@ public class PiedraPapelTijera implements Game {
 
     }
 
-    public void gameOver() {
+    private void gameOver() {
         if (win > lose) {
-            JOptionPane.showMessageDialog(frame, "Felicidades Campeon! Ganaste la partida " + win + " a " + lose, "GAME OVER", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(frame, "Felicidades Campeon! Ganaste la partida " + win + " a " + lose, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(frame, "Perdiste la partida! " + lose + " a " + win, "GAME OVER", JOptionPane.DEFAULT_OPTION);
+            JOptionPane.showMessageDialog(frame, "Perdiste la partida! " + lose + " a " + win, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
         }
     }
 

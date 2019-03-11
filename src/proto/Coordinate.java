@@ -2,12 +2,11 @@ package proto;
 
 public class Coordinate {
 
-    private static int MAX_COORD;
     private int x;
     private int y;
     private String reference = "";
 
-    public Coordinate() {
+    protected Coordinate() {
     }
 
     public Coordinate(int x, int y) {
@@ -26,7 +25,6 @@ public class Coordinate {
     }
 
     public static void setMaxCoord(int maxCoord) {
-        MAX_COORD = maxCoord;
     }
 
     public int getX() {

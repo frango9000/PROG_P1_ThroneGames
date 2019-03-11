@@ -1,6 +1,6 @@
 package proto;
 
-public interface IPlayer {
+interface IPlayer {
 
     char getId();
 }

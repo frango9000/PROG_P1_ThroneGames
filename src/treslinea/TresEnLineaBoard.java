@@ -10,19 +10,15 @@ import java.util.Arrays;
 public class TresEnLineaBoard extends Board {
 
     private int size;
-    private int rows;
-    private int cols;
 
 
     public TresEnLineaBoard() {
         this(3);
     }
 
-    public TresEnLineaBoard(int size) {
+    private TresEnLineaBoard(int size) {
         this.size = size;
-        this.rows = size;
-        this.cols = size;
-        table = new char[rows][cols];
+        table = new char[size][size];
         clearBoard();
     }
 
@@ -37,9 +33,9 @@ public class TresEnLineaBoard extends Board {
     }
 
     public boolean isFull() {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                if (table[i][j] == ' ')
+        for (char[] chars : table) {
+            for (char aChar : chars) {
+                if (aChar == ' ')
                     return false;
             }
         }
@@ -47,9 +43,9 @@ public class TresEnLineaBoard extends Board {
     }
 
     public void printBoard() {
-        String line = "   -";
+        StringBuilder line = new StringBuilder("   -");
         for (int i = 0; i < table.length; i++) {
-            line += "----";
+            line.append("----");
         }
         System.out.printf("%4s", "");
         for (int col = 0; col < table.length; col++) {
@@ -90,14 +86,14 @@ public class TresEnLineaBoard extends Board {
         str.append("<tr>\n");
         str.append("<th></th>\n");
         for (int col = 0; col < table.length; col++) {
-            str.append("<th>" + (col + 1) + "</th>\n");
+            str.append("<th>").append(col + 1).append("</th>\n");
         }
         str.append("</tr>\n");
 
         //all rows of the table with an extra first column (number coords)
         for (int row = 0; row < table.length; row++) {
             str.append("<tr>\n");
-            str.append("<th>" + ((char) (65 + row)) + "</th>\n");
+            str.append("<th>").append((char) (65 + row)).append("</th>\n");
             for (int cell = 0; cell < table[row].length; cell++) {//all cells on each row
                 str.append("<td");
                 if (row == 0)
@@ -120,11 +116,11 @@ public class TresEnLineaBoard extends Board {
         //close html
         str.append("</table>\n");
         str.append("</html>");
-        System.out.println(str.toString());
+        //System.out.println(str.toString());
         return str.toString();
     }
 
-    public ArrayList<int[]> moves() {
+    private ArrayList<int[]> moves() {
         ArrayList<int[]> moves = new ArrayList<>();
         for (int row = 0; row < table.length; row++) {
             for (int col = 0; col < table[row].length; col++) {
@@ -148,9 +144,9 @@ public class TresEnLineaBoard extends Board {
 
 
     public Character isGameOver() {
-        for (int i = 0; i < table.length; i++) {
-            if (table[i][0] != ' ' && (table[i][0] == table[i][1] && table[i][1] == table[i][2])) {
-                return table[i][0];//row winner
+        for (char[] chars : table) {
+            if (chars[0] != ' ' && (chars[0] == chars[1] && chars[1] == chars[2])) {
+                return chars[0];//row winner
             }
         }
         for (int i = 0; i < table.length; i++) {
@@ -168,13 +164,8 @@ public class TresEnLineaBoard extends Board {
     }
 
     @Override
-    public boolean validTurn(int[] coords, SimplePlayer simplePlayer) {
+    public boolean validTurn() {
         return false;
-    }
-
-    @Override
-    public void doTurn(int[] coords, SimplePlayer simplePlayer) {
-
     }
 
     public boolean validTurn(Coordinate coord) {
