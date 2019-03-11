@@ -1,6 +1,6 @@
 package damas;
 
-import damas.misc.Coordinate;
+import damas.misc.CoordinateDamas;
 import damas.misc.Damable;
 import lib.Data.ListManip;
 import proto.Game;
@@ -163,8 +163,8 @@ public class Damas implements Game {
         public int pickPiece() {
             String msg = table.toString();
 
-            Coordinate[] movablesArray = Coordinate.pickAPiece(movables);
-            Coordinate pick = (Coordinate) gamepane.showInputDialog(msg, movablesArray);
+            CoordinateDamas[] movablesArray = CoordinateDamas.pickAPiece(movables);
+            CoordinateDamas pick = (CoordinateDamas) gamepane.showInputDialog(msg, movablesArray);
             return Arrays.binarySearch(movablesArray, pick);
         }
 
@@ -172,8 +172,8 @@ public class Damas implements Game {
         public int pickMove() {
             String msg = table.toString();
 
-            Coordinate[] movatsArray = Coordinate.pickAMove(moves, attacks);
-            Coordinate pick = (Coordinate) gamepane.showInputDialog(msg, movatsArray);
+            CoordinateDamas[] movatsArray = CoordinateDamas.pickAMove(moves, attacks);
+            CoordinateDamas pick = (CoordinateDamas) gamepane.showInputDialog(msg, movatsArray);
 
             return pick.getIndexOf(movatsArray);
         }

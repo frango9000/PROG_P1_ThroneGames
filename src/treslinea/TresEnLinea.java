@@ -1,11 +1,11 @@
 package treslinea;
 
-import damas.misc.Coordinate;
+import proto.Coordinate;
 import proto.Game;
 import proto.GamePane;
 import proto.SimplePlayer;
 
-import javax.swing.*;
+import java.util.InputMismatchException;
 
 
 public class TresEnLinea implements Game {
@@ -13,11 +13,14 @@ public class TresEnLinea implements Game {
     public static void main(String[] args) {
         TresEnLinea tnl = new TresEnLinea();
         tnl.setGamePane(new GamePane());
-        tnl.startGame();;
+        tnl.startGame();
     }
+
     TresEnLineaBoard game;
 
     GamePane gamepane = null;
+
+    public static boolean CONSOLE = true;
 
     @Override
     public void startGame() {
@@ -26,7 +29,6 @@ public class TresEnLinea implements Game {
         SimplePlayer p2 = SimplePlayer.PLAYER2;
         int count = 0;
         while (game.isGameOver() == null) {
-            //game.printBoard();
             playerTurn((count++ % 2 == 0) ? p1 : p2);
         }
         game.printBoard();
@@ -36,51 +38,50 @@ public class TresEnLinea implements Game {
     @Override
     public void setGamePane(GamePane gamepane) {
         this.gamepane = gamepane;
+        CONSOLE = false;
     }
-
     public void playerTurn(SimplePlayer player) {
-        int[] coords;
-        boolean valid = false;
-        do {
-            coords = enterCoords(player);
-            valid = game.validTurn(coords, player);
-        } while (!valid);
-        game.doTurn(coords, player);
-    }
-
-    public int[] enterCoords(SimplePlayer player) {
-        int x = 0, y = 0;
         Coordinate pick;
-        do {
-            String board = game.toString();
-            System.out.println(board);
-            board += "\nPlayer's " + player.getId() + " turn\n";
-
-            Coordinate[] moves = game.movesArray();
-            pick = (Coordinate) gamepane.showInputDialog(board, moves);
-
-        } while (pick.getX() < 0 || pick.getX() > 2 || pick.getY() < 0 || pick.getY() > 2);
-        return new int[]{x, y};
-    }
-/* consola
-    public void playerTurn(SimplePlayer simplePlayer) {
-        int[] coords;
         boolean valid = false;
         do {
-            coords = enterCoords(simplePlayer);
-            valid = game.validTurn(coords, simplePlayer);
+            if(CONSOLE)
+                pick = enterCoordsC(player);
+            else
+                pick = enterCoords(player);
+            valid = game.validTurn(pick);
         } while (!valid);
-        game.doTurn(coords, simplePlayer);
+        game.doTurn(pick, player);
     }
 
-    public int[] enterCoords(SimplePlayer simplePlayer) {
+    public Coordinate enterCoords(SimplePlayer player) {
+        Coordinate pick;
+        String board = game.toString();
+        //board += "\n<html>Player's " + player.getId() + " turn\n";
+
+        Coordinate[] moves = game.movesArray();
+        pick = (Coordinate) gamepane.showInputDialog(board, moves);
+        return pick;
+    }
+    public void gameOver(){
+        gamepane.showMessageDialog(game.toString());
+    }
+
+    public Coordinate enterCoordsC(SimplePlayer simplePlayer) {
+        game.printBoard();
         int x = 0, y = 0;
         do {
-            System.out.println("SimplePlayer " + simplePlayer.getId() + " enter coords x , y: ");
-            x = lib.Misc.IO.scanInt();
-            y = lib.Misc.IO.scanInt();
-        } while (x < 1 || x > 3 || y < 1 || y > 3);
-        return new int[]{x, y};
+            System.out.println("Player " + simplePlayer.getId() + " turn");
+            try {
+                x = lib.Misc.IO.scanInt("Enter coord digit: ");
+                y = lib.Misc.IO.scanChar("Enter coord letter: ");
+            }catch (InputMismatchException e){
+                continue;
+            }
+        } while (x < 1
+                || x > game.getSize()
+                || Character.toLowerCase(y) < 'a'
+                || Character.toLowerCase(y) > (char)game.getSize()-1+'a');
+        return new Coordinate(x-1, y-97);
     }
-    */
+
 }

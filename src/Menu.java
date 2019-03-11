@@ -12,7 +12,7 @@ public class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"3 en linea", "Ahorcado", "Piedra Papel o Tijera","Damas" };
+    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera","Damas" };
 
     public Menu() {
         gamepane = new GamePane();

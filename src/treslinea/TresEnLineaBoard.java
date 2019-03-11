@@ -1,8 +1,8 @@
 package treslinea;
 
-import damas.misc.Coordinate;
-import lib.Math.Algebra;
+import damas.misc.CoordinateDamas;
 import proto.Board;
+import proto.Coordinate;
 import proto.SimplePlayer;
 
 import java.util.ArrayList;
@@ -10,15 +10,25 @@ import java.util.Arrays;
 
 public class TresEnLineaBoard extends Board {
 
+    private int size;
+    private int rows;
+    private int cols;
+
+
     public TresEnLineaBoard() {
         this(3);
     }
 
     public TresEnLineaBoard(int size) {
-        rows = size;
-        cols = size;
+        this.size = size;
+        this.rows = size;
+        this.cols = size;
         table = new char[rows][cols];
         clearBoard();
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void clearBoard() {
@@ -38,17 +48,22 @@ public class TresEnLineaBoard extends Board {
     }
 
     public void printBoard() {
-        String line = "-";
+        String line = "   -";
         for (int i = 0; i < table.length; i++) {
             line += "----";
         }
+        System.out.printf("%4s","");
+        for (int col = 0; col < table.length; col++) {
+            System.out.printf("%2d  ", col+1);
+        }
+        System.out.println();
         System.out.println(line);
-        for (char[] chars : table) {
-            for (int i = 0; i < chars.length; i++) {
-                System.out.printf("| %c ", chars[i]);
-
+        for (int row = 0; row < table.length; row++) {
+            System.out.printf(" %c ", ( (char) (65 + row) ));
+            for (int cell = 0; cell < table[row].length; cell++) {
+                System.out.printf("| %c ", table[row][cell]);
             }
-            System.out.println(" |%n" + line);
+            System.out.println("|\n" + line);
         }
 
     }
@@ -61,7 +76,9 @@ public class TresEnLineaBoard extends Board {
                 "border-spacing: 0px;}\n" +
                 "td{border:solid black 2px;\n" +
                 "width: 70px;\n" +
-                "height: 70px;}\n" +
+                "height: 70px;\n" +
+                "text-align: center;\n" +
+                "font-size: 30px;}\n" +
                 "th{width: 30px}\n" +
                 ".top{border-top: none;}\n" +
                 ".bot{border-bottom: none;}\n" +
@@ -74,14 +91,14 @@ public class TresEnLineaBoard extends Board {
         str.append("<tr>\n");
         str.append("<th></th>\n");
         for (int col = 0; col < table.length; col++) {
-            str.append("<th>" + (char) (65 + col) + "</th>\n");
+            str.append("<th>" + ( col + 1 ) + "</th>\n");
         }
         str.append("</tr>\n");
 
         //all rows of the table with an extra first column (number coords)
         for (int row = 0; row < table.length; row++) {
             str.append("<tr>\n");
-            str.append("<th>"+(row+1)+"</th>\n");
+            str.append("<th>"+ ( (char) (65 + row) ) +"</th>\n");
             for (int cell = 0; cell < table[row].length; cell++) {//all cells on each row
                 str.append("<td");
                 if(row == 0)
@@ -95,7 +112,7 @@ public class TresEnLineaBoard extends Board {
                     str.append(" style=\"border-right: none;\"");
 
                 str.append(">");
-                //str.append((cell==-1)?"":table[row][cell]);
+                str.append(table[row][cell]);
                 str.append("</td>\n");
             }
             str.append("</tr>\n");
@@ -104,7 +121,7 @@ public class TresEnLineaBoard extends Board {
         //close html
         str.append("</table>\n");
         str.append("</html>");
-
+        System.out.println(str.toString());
         return str.toString();
     }
 
@@ -151,12 +168,22 @@ public class TresEnLineaBoard extends Board {
         else return null;//game not over
     }
 
+    @Override
     public boolean validTurn(int[] coords, SimplePlayer simplePlayer) {
-        return (table[coords[0] - 1][coords[1] - 1] == ' ');
+        return false;
     }
 
+    @Override
     public void doTurn(int[] coords, SimplePlayer simplePlayer) {
-        table[coords[0] - 1][coords[1] - 1] = simplePlayer.getId();
+
+    }
+
+    public boolean validTurn(Coordinate coord) {
+        return (table[coord.getX()][coord.getY()] == ' ');
+    }
+
+    public void doTurn(Coordinate coord, SimplePlayer player) {
+        table[coord.getX()][coord.getY()] = player.getId();
     }
 
 }
