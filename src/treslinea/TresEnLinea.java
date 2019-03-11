@@ -1,8 +1,9 @@
 package treslinea;
 
-import lib.IO;
 import proto.Game;
-import proto.Player;
+import proto.GamePane;
+import proto.SimplePlayer;
+
 
 public class TresEnLinea implements Game {
 
@@ -11,8 +12,8 @@ public class TresEnLinea implements Game {
     @Override
     public void startGame() {
         game = new TresEnLineaBoard();
-        Player p1 = Player.PLAYER1;
-        Player p2 = Player.PLAYER2;
+        SimplePlayer p1 = SimplePlayer.PLAYER1;
+        SimplePlayer p2 = SimplePlayer.PLAYER2;
         int count = 0;
         while (game.isGameOver() == null) {
             game.printBoard();
@@ -22,22 +23,27 @@ public class TresEnLinea implements Game {
         System.out.println("Game Over");
     }
 
-    public void playerTurn(Player player) {
+    @Override
+    public void setGamePane(GamePane gamePane) {
+
+    }
+
+    public void playerTurn(SimplePlayer simplePlayer) {
         int[] coords;
         boolean valid = false;
         do {
-            coords = enterCoords(player);
-            valid = game.validTurn(coords, player);
+            coords = enterCoords(simplePlayer);
+            valid = game.validTurn(coords, simplePlayer);
         } while (!valid);
-        game.doTurn(coords, player);
+        game.doTurn(coords, simplePlayer);
     }
 
-    public int[] enterCoords(Player player) {
+    public int[] enterCoords(SimplePlayer simplePlayer) {
         int x = 0, y = 0;
         do {
-            System.out.println("Player " + player.getId() + " enter coords x , y: ");
-            x = IO.scanInt();
-            y = IO.scanInt();
+            System.out.println("SimplePlayer " + simplePlayer.getId() + " enter coords x , y: ");
+            x = lib.Misc.IO.scanInt();
+            y = lib.Misc.IO.scanInt();
         } while (x < 1 || x > 3 || y < 1 || y > 3);
         return new int[]{x, y};
     }

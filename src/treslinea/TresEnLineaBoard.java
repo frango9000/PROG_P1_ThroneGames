@@ -1,7 +1,7 @@
 package treslinea;
 
 import proto.Board;
-import proto.Player;
+import proto.SimplePlayer;
 
 import java.util.Arrays;
 
@@ -61,12 +61,12 @@ public class TresEnLineaBoard extends Board {
         else return null;//game not over
     }
 
-    public boolean validTurn(int[] coords, Player player) {
+    public boolean validTurn(int[] coords, SimplePlayer simplePlayer) {
         return (table[coords[0] - 1][coords[1] - 1] == ' ');
     }
 
-    public void doTurn(int[] coords, Player player) {
-        table[coords[0] - 1][coords[1] - 1] = player.getId();
+    public void doTurn(int[] coords, SimplePlayer simplePlayer) {
+        table[coords[0] - 1][coords[1] - 1] = simplePlayer.getId();
     }
 
 }
