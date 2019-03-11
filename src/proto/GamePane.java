@@ -7,21 +7,9 @@ import java.awt.*;
 import java.io.File;
 
 public class GamePane extends JFrame {
-    public static void main(String[] args) {
-        GamePane gp = new GamePane();
-
-        DamasBoard d = new DamasBoard();
-        gp.showMessageDialog(d.toString());
-    }
-
-    private String title;
-    private String font = "sans-serif";
-
     private static final int MIN_WIDTH = 400;
     private static final int MIN_HEIGHT = 400;
-
     File f = new File("img/logo.jpg");
-
     String html = "<html>This is how to get:"
             + "<ul><li><i>italics</i> and "
             + "<li><b>bold</b> and "
@@ -43,10 +31,18 @@ public class GamePane extends JFrame {
             "</table>\n" +
             "</body>\n" +
             "</html>";
-
+    private String title;
+    private String font = "sans-serif";
     public GamePane() {
         UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
         title = "Juegos Reunidos";
+    }
+
+    public static void main(String[] args) {
+        GamePane gp = new GamePane();
+
+        DamasBoard d = new DamasBoard();
+        gp.showMessageDialog(d.toString());
     }
 
     @Override

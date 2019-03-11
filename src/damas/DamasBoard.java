@@ -7,6 +7,7 @@ import lib.Geometry.Point;
 import lib.Math.Algebra;
 import proto.Board;
 import proto.SimplePlayer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -104,7 +105,7 @@ public class DamasBoard extends Board {
         String cellHighlight = "";
 
         int totalWidth = 300;
-        int cellSize = totalWidth / rows+2;
+        int cellSize = totalWidth / rows + 2;
 
         StringBuilder board = new StringBuilder();
         // html header

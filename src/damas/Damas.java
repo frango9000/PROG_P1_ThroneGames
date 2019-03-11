@@ -15,16 +15,12 @@ import static lib.Misc.IO.scanInt;
 public class Damas implements Game {
 
 
+    private static String stage = "";
     private DamasBoard table;
     private DamasPlayer PLAYER_1;
     private DamasPlayer PLAYER_2;
-
     private GamePane gamepane = null;
-
     private Damable menu;
-
-    private static String stage = "";
-
     private ArrayList<int[]> movables;
     private ArrayList<int[]> moves;
     private ArrayList<int[]> attacks;
@@ -33,6 +29,21 @@ public class Damas implements Game {
     public Damas() {
         PLAYER_1 = DamasPlayer.newPlayer();
         PLAYER_2 = DamasPlayer.newPlayer();
+    }
+
+    public static String getStage() {
+        return stage;
+    }
+
+    public static void setStage(int n) {
+        switch (n) {
+            case 0:
+                stage = "piece";
+                break;//pick a piece
+            case 1:
+                stage = "move";
+                break;
+        }
     }
 
     public void setGamepane(GamePane gamepane) {
@@ -58,21 +69,6 @@ public class Damas implements Game {
     @Override
     public void setGamePane(GamePane gamepane) {
         this.gamepane = gamepane;
-    }
-
-    public static String getStage() {
-        return stage;
-    }
-
-    public static void setStage(int n) {
-        switch (n) {
-            case 0:
-                stage = "piece";
-                break;//pick a piece
-            case 1:
-                stage = "move";
-                break;
-        }
     }
 
     private void nextTurn() {
