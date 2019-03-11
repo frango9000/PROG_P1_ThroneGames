@@ -7,7 +7,10 @@ import proto.Game;
 import proto.GamePane;
 
 public class Ahorcado implements Game {
-
+    public static void main(String[] args) {
+        Ahorcado a = new Ahorcado();
+        a.startGame();
+    }
     Frame frame = new Frame();
     static String[] palabras = {"casa", "perro", "jungla", "proyecto", "escritorio", "lampara", "programacion", "java", "adivinar"};
     String palabra;
@@ -69,8 +72,10 @@ public class Ahorcado implements Game {
         String txtSolicitud = "Introduce una letra: " + "\n";
         String muñeco = dibujar(contador);
         char letraJugada;
+        String[] opciones = {"Intentar", "Salir"};
         do {
-            letraJugada = Character.toLowerCase(JOptionPane.showInputDialog(txtVidas + "\n\n" + txtIndicacion + Arrays.toString(palabraOculta) + "\n\n" + muñeco + "\n\n" + txtSolicitud).charAt(0));
+            String t = (String)JOptionPane.showInputDialog(frame,txtVidas + "\n\n" + txtIndicacion + Arrays.toString(palabraOculta) + "\n\n" + muñeco + "\n\n" + txtSolicitud, "AHORCADO",JOptionPane.PLAIN_MESSAGE);
+            letraJugada = Character.toLowerCase(t.charAt(0));
         } while (!Character.isLetter(letraJugada));
         return letraJugada;
     }
@@ -110,10 +115,10 @@ public class Ahorcado implements Game {
         muñeco[2]  = "   --------------------------------" + "\n";
         muñeco[3]  = "   |                               |" + "\n";
         muñeco[4]  = "   |                               |" + "\n";
-        muñeco[5]  = "   |                          ∧∧∧∧   " + "\n";
+        muñeco[5]  = "   |                           ∧∧∧∧∧  " + "\n";
         muñeco[6]  = "   |                           |  O O  |" + "\n";
-        muñeco[7]  = "   |                           |  ___  |" + "\n";
-        muñeco[8]  = "   |                           |_____|" + "\n";
+        muñeco[7]  = "   |                           |   ___   |" + "\n";
+        muñeco[8]  = "   |                            \\______/" + "\n";
         muñeco[9]  = "   |                                ||" + "\n";
         muñeco[10] = "   |                                ||" + "\n";
         muñeco[11] = "   |                                ||" + "\n";
@@ -157,8 +162,8 @@ public class Ahorcado implements Game {
 
             case 3:
                 String brazoI = "\n";
-                muñeco[9]  = "    |                              //||" + "\n";
-                muñeco[10]  = "   |                             // ||" + "\n";
+                muñeco[9]  = "   |                              //||" + "\n";
+                muñeco[10] = "   |                             // ||" + "\n";
                 muñeco[11] = "   |                            //  ||" + "\n";
                 muñeco[12] = "   |                           //   ||" + "\n";
                 muñeco[13] = "   |                                ||" + "\n";
@@ -223,7 +228,7 @@ public class Ahorcado implements Game {
 
             case 7:
                 String ko = "\n";
-                muñeco[6]  = "   |                           |  X X  |" + "\n";
+                muñeco[6]  = "   |                           |  X  X  |" + "\n";
                 muñeco[7]  = "   |                           |    o    |" + "\n";
                 muñeco[9]  = "   |                               //||\\\\" + "\n";
                 muñeco[9]  = "   |                             // || \\\\" + "\n";

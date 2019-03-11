@@ -1,8 +1,10 @@
 package treslinea;
 
+import damas.misc.Coordinate;
 import proto.Board;
 import proto.SimplePlayer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TresEnLineaBoard extends Board {
@@ -40,6 +42,40 @@ public class TresEnLineaBoard extends Board {
         }
 
     }
+
+    public String toString(){
+        String line = "-------------\n";
+        String str = line;
+        for (char[] chars : table) {
+            str += String.format("| %c | %c | %c |%n", chars[0], chars[1], chars[2]);
+            str += line;
+        }
+        return str;
+    }
+
+    public ArrayList<int[]> moves(){
+        ArrayList<int[]> moves = new ArrayList<>();
+        for (int row = 0; row < table.length; row++) {
+            for (int col = 0; col < table[row].length; col++) {
+                if(table[row][col] == ' '){
+                    moves.add( new int[] {row,col});
+                }
+            }
+        }
+        return moves;
+    }
+
+    public Coordinate[] movesArray(){
+        ArrayList<int[]> moves = moves();
+        Coordinate[] array = new Coordinate[moves.size()];
+
+        for (int i = 0; i < moves.size(); i++) {
+            array[i] = new Coordinate(moves.get(i));
+
+        }
+        return array;
+    }
+
 
     public Character isGameOver() {
         for (int i = 0; i < table.length; i++) {
