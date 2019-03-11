@@ -8,12 +8,12 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Ahorcado implements Game {
-    static String[] palabras = {"casa", "perro", "jungla", "proyecto", "escritorio", "lampara", "programacion", "java", "adivinar"};
-    Frame frame = new Frame();
-    String palabra;
-    char[] palabraOculta;
-    int contador;
-    int TMAX = 7;
+    private static String[] palabras = {"casa", "perro", "jungla", "proyecto", "escritorio", "lampara", "programacion", "java", "adivinar"};
+    private Frame frame = new Frame();
+    private String palabra;
+    private char[] palabraOculta;
+    private int contador;
+    private int TMAX = 7;
     public Ahorcado() {
         this.palabra = palabraAleatoria();
         this.palabraOculta = ocultarPalabra();
@@ -25,10 +25,9 @@ public class Ahorcado implements Game {
         a.startGame();
     }
 
-    public static String palabraAleatoria() {
+    private static String palabraAleatoria() {
         int posicionRand = (int) Math.floor(Math.random() * palabras.length);
-        String palabraRand = palabras[posicionRand];
-        return palabraRand;
+        return palabras[posicionRand];
     }
 
     private static String dibujar(int caso) {
@@ -54,37 +53,37 @@ public class Ahorcado implements Game {
 
         switch (caso) {
             case 0:
-                String orca = "\n";
+                StringBuilder orca = new StringBuilder("\n");
 
                 for (int i = 0; i < 5; i++) {
 
-                    orca += muñeco[i];
+                    orca.append(muñeco[i]);
 
                 }
-                return orca;
+                return orca.toString();
 
             case 1:
-                String cabeza = "\n";
+                StringBuilder cabeza = new StringBuilder("\n");
 
                 for (int i = 0; i < 9; i++) {
 
-                    cabeza += muñeco[i];
+                    cabeza.append(muñeco[i]);
 
                 }
-                return cabeza;
+                return cabeza.toString();
 
             case 2:
-                String cuerpo = "\n";
+                StringBuilder cuerpo = new StringBuilder("\n");
 
                 for (int i = 0; i < 14; i++) {
 
-                    cuerpo += muñeco[i];
+                    cuerpo.append(muñeco[i]);
 
                 }
-                return cuerpo;
+                return cuerpo.toString();
 
             case 3:
-                String brazoI = "\n";
+                StringBuilder brazoI = new StringBuilder("\n");
                 muñeco[9] = "   |                              //||" + "\n";
                 muñeco[10] = "   |                             // ||" + "\n";
                 muñeco[11] = "   |                            //  ||" + "\n";
@@ -93,13 +92,13 @@ public class Ahorcado implements Game {
 
                 for (int i = 0; i < 14; i++) {
 
-                    brazoI += muñeco[i];
+                    brazoI.append(muñeco[i]);
 
                 }
-                return brazoI;
+                return brazoI.toString();
 
             case 4:
-                String brazoD = "\n";
+                StringBuilder brazoD = new StringBuilder("\n");
                 muñeco[9] = "   |                              //||\\\\" + "\n";
                 muñeco[10] = "   |                             // || \\\\" + "\n";
                 muñeco[11] = "   |                            //  ||  \\\\" + "\n";
@@ -108,13 +107,13 @@ public class Ahorcado implements Game {
 
                 for (int i = 0; i < 14; i++) {
 
-                    brazoD += muñeco[i];
+                    brazoD.append(muñeco[i]);
 
                 }
-                return brazoD;
+                return brazoD.toString();
 
             case 5:
-                String piernaI = "\n";
+                StringBuilder piernaI = new StringBuilder("\n");
                 muñeco[9] = "   |                              //||\\\\" + "\n";
                 muñeco[10] = "   |                             // || \\\\" + "\n";
                 muñeco[11] = "   |                           //   ||  \\\\" + "\n";
@@ -126,13 +125,13 @@ public class Ahorcado implements Game {
 
                 for (int i = 0; i < 16; i++) {
 
-                    piernaI += muñeco[i];
+                    piernaI.append(muñeco[i]);
 
                 }
-                return piernaI;
+                return piernaI.toString();
 
             case 6:
-                String piernaD = "\n";
+                StringBuilder piernaD = new StringBuilder("\n");
                 muñeco[9] = "   |                              //||\\\\" + "\n";
                 muñeco[10] = "   |                             // || \\\\" + "\n";
                 muñeco[11] = "   |                           //   ||  \\\\" + "\n";
@@ -144,13 +143,13 @@ public class Ahorcado implements Game {
 
                 for (int i = 0; i < 16; i++) {
 
-                    piernaD += muñeco[i];
+                    piernaD.append(muñeco[i]);
 
                 }
-                return piernaD;
+                return piernaD.toString();
 
             case 7:
-                String ko = "\n";
+                StringBuilder ko = new StringBuilder("\n");
                 muñeco[6] = "   |                           |  X  X  |" + "\n";
                 muñeco[7] = "   |                           |    o    |" + "\n";
                 muñeco[9] = "   |                               //||\\\\" + "\n";
@@ -164,10 +163,10 @@ public class Ahorcado implements Game {
 
                 for (int i = 0; i < 16; i++) {
 
-                    ko += muñeco[i];
+                    ko.append(muñeco[i]);
 
                 }
-                return ko;
+                return ko.toString();
         }
         return null;
     }
@@ -197,7 +196,7 @@ public class Ahorcado implements Game {
 
     }
 
-    public char[] ocultarPalabra() {
+    private char[] ocultarPalabra() {
 
         char[] letras = palabra.toCharArray();
         char[] letrasOcultas = new char[letras.length];
@@ -207,7 +206,7 @@ public class Ahorcado implements Game {
         return letrasOcultas;
     }
 
-    public char capturarLetra() {
+    private char capturarLetra() {
 
         String txtVidas = " Te quedan: " + (TMAX - contador) + " vidas." + "\n";
         String txtIndicacion = "Intenta adivinar la siguiente palabra: " + "\n";
@@ -222,7 +221,7 @@ public class Ahorcado implements Game {
         return letraJugada;
     }
 
-    public boolean verificarExistencia(char letra) {
+    private boolean verificarExistencia(char letra) {
 
         for (int i = 0; i < palabra.length(); i++) {
             if (palabra.charAt(i) == letra) {
@@ -232,7 +231,7 @@ public class Ahorcado implements Game {
         return false;
     }
 
-    public void sustituirLetra(char letra) {
+    private void sustituirLetra(char letra) {
         for (int i = 0; i < palabra.length(); i++) {
             if (palabra.charAt(i) == letra) {
                 palabraOculta[i] = letra;
@@ -240,7 +239,7 @@ public class Ahorcado implements Game {
         }
     }
 
-    public int gameOver() {
+    private int gameOver() {
         if (Arrays.equals(palabra.toCharArray(), palabraOculta)) {
             return 1;
         } else if (contador == TMAX) {

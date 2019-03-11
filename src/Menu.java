@@ -6,7 +6,7 @@ import proto.GamePane;
 import treslinea.TresEnLinea;
 
 
-public class Menu {
+class Menu {
 
     private GamePane gamepane;
 

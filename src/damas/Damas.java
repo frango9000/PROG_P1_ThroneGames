@@ -35,7 +35,7 @@ public class Damas implements Game {
         return stage;
     }
 
-    public static void setStage(int n) {
+    private static void setStage(int n) {
         switch (n) {
             case 0:
                 stage = "piece";
@@ -120,7 +120,7 @@ public class Damas implements Game {
             ListManip.printList(movables, true, 1);
 
             //pick piece
-            int piece = 0;
+            int piece;
             do {
                 piece = scanInt("Move piece: ");
             } while (piece < 1 || piece > movables.size());
@@ -139,7 +139,7 @@ public class Damas implements Game {
                 ListManip.printList(attacks, true, moves.size() + 1);
             }
 
-            int move = 0;
+            int move;
             do {
                 move = scanInt("Pick a move:");
             } while (move < 1 || move > movats.size());

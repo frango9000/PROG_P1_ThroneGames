@@ -5,7 +5,7 @@ public enum SimplePlayer implements IPlayer {
     PLAYER1('X'),
     PLAYER2('O');
 
-    char id;
+    private char id;
 
     SimplePlayer(char id) {
         this.id = id;

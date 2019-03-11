@@ -20,12 +20,12 @@ public class CoordinateDamas extends Coordinate implements Comparable<Coordinate
         this.y = y;
     }
 
-    public CoordinateDamas(int[] coords) {
+    private CoordinateDamas(int[] coords) {
         this.x = coords[0];
         this.y = coords[1];
     }
 
-    public CoordinateDamas(int[] coords, String reference) {
+    private CoordinateDamas(int[] coords, String reference) {
         this(coords);
         this.reference = reference;
     }
