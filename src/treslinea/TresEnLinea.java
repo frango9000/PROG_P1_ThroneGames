@@ -53,6 +53,7 @@ public class TresEnLinea implements Game {
         Coordinate pick;
         do {
             String board = game.toString();
+            System.out.println(board);
             board += "\nPlayer's " + player.getId() + " turn\n";
 
             Coordinate[] moves = game.movesArray();

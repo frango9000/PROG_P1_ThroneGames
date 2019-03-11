@@ -1,39 +1,39 @@
 <html>
 <style>
-table{border-collapse: collapse;}
-td{border:solid black 4px;
-width: 70px;
-height: 70px;}
-th{width: 30px}
-.top{border-top: none;}
-.bot{border-bottom: none;}
-.left{border-left: none;}
-.right{border-right: none;}
+	table{border-collapse: collapse;}
+	td{border:solid black 4px;
+		width: 70px;
+		height: 70px;}
+	th{width: 30px}
+	.top{border-top: none;}
+	.bot{border-bottom: none;}
+	#left{border-left: none;}
+	#right{border-right: none;}
 </style>
 <table>
 	<tr>
-		<th> </th>
+		<th></th>
 		<th>A</th>
 		<th>B</th>
 		<th>C</th>
 	</tr>
 	<tr>
 		<th>1</th>
-		<td class="top left"></td>
+		<td class="top" id="left"></td>
 		<td class="top"></td>
-		<td class="top right "></td>
+		<td class="top" id="right"></td>
 	</tr>
 	<tr>
 		<th>2</th>
-		<td class="left"></td>
-		<td class=""></td>
-		<td class="right"></td>
+		<td id="left"></td>
+		<td></td>
+		<td id="right"></td>
 	</tr>
 	<tr>
 		<th>3</th>
-		<td class="bot left"></td>
+		<td class="bot" id="left"></td>
 		<td class="bot"></td>
-		<td class="bot right"></td>
+		<td class="bot" id="right"></td>
 	</tr>
 </table>
 </html>
