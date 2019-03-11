@@ -5,14 +5,12 @@ import proto.Game;
 import proto.GamePane;
 import treslinea.TresEnLinea;
 
-import java.io.File;
 
-
-public class Menu {
+class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera","Damas" };
+    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera", "Damas"};
 
     public Menu() {
         gamepane = new GamePane();
