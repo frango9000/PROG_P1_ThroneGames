@@ -1,4 +1,5 @@
 import damas.Damas;
+import ppt.PiedraPapelTijera;
 import proto.Game;
 import proto.GamePane;
 import treslinea.TresEnLinea;
@@ -33,7 +34,7 @@ public class Menu {
                 game = new Damas();
                 break;
             case "Piedra Papel o Tijera":
-                game = new TresEnLinea();
+                game = new PiedraPapelTijera();
                 break;
             default:
                 game = new Damas();

@@ -17,8 +17,8 @@ public class GamePane extends JFrame {
     private String title;
     private String font = "sans-serif";
 
-    private static final int MIN_WIDTH = 600;
-    private static final int MIN_HEIGHT = 800;
+    private static final int MIN_WIDTH = 400;
+    private static final int MIN_HEIGHT = 400;
 
     File f = new File("img/logo.jpg");
 
