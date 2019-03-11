@@ -1,10 +1,12 @@
 package damas.misc;
 
+import proto.Coordinate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Coordinate implements Comparable<Coordinate> {
+public class CoordinateDamas extends Coordinate implements Comparable<CoordinateDamas> {
     private int x;
     private int y;
 
@@ -12,7 +14,22 @@ public class Coordinate implements Comparable<Coordinate> {
 
     private static int MAX_COORD;
 
-    public Coordinate() {
+    public CoordinateDamas() {
+    }
+
+    public CoordinateDamas(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public CoordinateDamas(int[] coords) {
+        this.x = coords[0];
+        this.y = coords[1];
+    }
+
+    public CoordinateDamas(int[] coords, String reference) {
+        this(coords);
+        this.reference = reference;
     }
 
     public int getX() {
@@ -21,21 +38,6 @@ public class Coordinate implements Comparable<Coordinate> {
 
     public int getY() {
         return y;
-    }
-
-    public Coordinate(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public Coordinate(int[] coords) {
-        this.x = coords[0];
-        this.y = coords[1];
-    }
-
-    public Coordinate(int[] coords, String reference) {
-        this(coords);
-        this.reference = reference;
     }
 
     public static void setMaxCoord(int maxCoord) {
@@ -51,7 +53,7 @@ public class Coordinate implements Comparable<Coordinate> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Coordinate that = (Coordinate) o;
+        CoordinateDamas that = (CoordinateDamas) o;
         return x == that.x &&
                 y == that.y;
     }
@@ -62,32 +64,32 @@ public class Coordinate implements Comparable<Coordinate> {
     }
 
     @Override
-    public int compareTo(Coordinate o) {
+    public int compareTo(CoordinateDamas o) {
         return Arrays.compare(new int[]{this.x, this.y}, new int[]{o.x, o.y});
     }
 
-    public static Coordinate[] pickAPiece(ArrayList<int[]> pieces) {
-        Coordinate[] array = new Coordinate[pieces.size()];
+    public static CoordinateDamas[] pickAPiece(ArrayList<int[]> pieces) {
+        CoordinateDamas[] array = new CoordinateDamas[pieces.size()];
         for (int i = 0; i < pieces.size(); i++) {
-            array[i] = new Coordinate(pieces.get(i), "Piece @ ");
+            array[i] = new CoordinateDamas(pieces.get(i), "Piece @ ");
         }
         return array;
     }
 
-    public static Coordinate[] pickAMove(ArrayList<int[]> moves, ArrayList<int[]> attacks) {
-        Coordinate[] array = new Coordinate[moves.size() + attacks.size()];
+    public static CoordinateDamas[] pickAMove(ArrayList<int[]> moves, ArrayList<int[]> attacks) {
+        CoordinateDamas[] array = new CoordinateDamas[moves.size() + attacks.size()];
         if (moves.size() > 0)
             for (int i = 0; i < moves.size(); i++) {
-                array[i] = new Coordinate(moves.get(i), "Move @ ");
+                array[i] = new CoordinateDamas(moves.get(i), "Move @ ");
             }
         if (attacks.size() > 0)
             for (int i = moves.size(); i < array.length; i++) {
-                array[i] = new Coordinate(attacks.get(i - moves.size()), "Attack @ ");
+                array[i] = new CoordinateDamas(attacks.get(i - moves.size()), "Attack @ ");
             }
         return array;
     }
 
-    public int getIndexOf(Coordinate[] coords) {
+    public int getIndexOf(CoordinateDamas[] coords) {
         for (int i = 0; i < coords.length; i++) {
             if (coords[i] == this)
                 return i;
