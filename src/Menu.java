@@ -1,3 +1,4 @@
+import ahorcado.Ahorcado;
 import damas.Damas;
 import ppt.PiedraPapelTijera;
 import proto.Game;
@@ -11,7 +12,7 @@ public class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"3 en linea", "Ahorcado", "Piedra Papel o Tijera","Damas"};
+    private String[] games = {"3 en linea", "Ahorcado", "Piedra Papel o Tijera","Damas" };
 
     public Menu() {
         gamepane = new GamePane();
@@ -24,17 +25,17 @@ public class Menu {
         Game game;
 
         switch (selection) {
-            case "Damas":
-                game = new Damas();
-                break;
             case "3 en Linea":
                 game = new TresEnLinea();
                 break;
             case "Ahorcado":
-                game = new Damas();
+                game = new Ahorcado();
                 break;
             case "Piedra Papel o Tijera":
                 game = new PiedraPapelTijera();
+                break;
+            case "Damas":
+                game = new Damas();
                 break;
             default:
                 game = new Damas();
