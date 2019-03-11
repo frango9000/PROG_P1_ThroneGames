@@ -15,16 +15,12 @@ import static lib.Misc.IO.scanInt;
 public class Damas implements Game {
 
 
+    private static String stage = "";
     private DamasBoard table;
     private DamasPlayer PLAYER_1;
     private DamasPlayer PLAYER_2;
-
     private GamePane gamepane = null;
-
     private Damable menu;
-
-    private static String stage = "";
-
     private ArrayList<int[]> movables;
     private ArrayList<int[]> moves;
     private ArrayList<int[]> attacks;
@@ -33,6 +29,21 @@ public class Damas implements Game {
     public Damas() {
         PLAYER_1 = DamasPlayer.newPlayer();
         PLAYER_2 = DamasPlayer.newPlayer();
+    }
+
+    public static String getStage() {
+        return stage;
+    }
+
+    private static void setStage(int n) {
+        switch (n) {
+            case 0:
+                stage = "piece";
+                break;//pick a piece
+            case 1:
+                stage = "move";
+                break;
+        }
     }
 
     public void setGamepane(GamePane gamepane) {
@@ -58,21 +69,6 @@ public class Damas implements Game {
     @Override
     public void setGamePane(GamePane gamepane) {
         this.gamepane = gamepane;
-    }
-
-    public static String getStage() {
-        return stage;
-    }
-
-    public static void setStage(int n) {
-        switch (n) {
-            case 0:
-                stage = "piece";
-                break;//pick a piece
-            case 1:
-                stage = "move";
-                break;
-        }
     }
 
     private void nextTurn() {
@@ -124,7 +120,7 @@ public class Damas implements Game {
             ListManip.printList(movables, true, 1);
 
             //pick piece
-            int piece = 0;
+            int piece;
             do {
                 piece = scanInt("Move piece: ");
             } while (piece < 1 || piece > movables.size());
@@ -143,7 +139,7 @@ public class Damas implements Game {
                 ListManip.printList(attacks, true, moves.size() + 1);
             }
 
-            int move = 0;
+            int move;
             do {
                 move = scanInt("Pick a move:");
             } while (move < 1 || move > movats.size());

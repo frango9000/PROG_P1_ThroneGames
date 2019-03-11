@@ -10,17 +10,16 @@ import java.util.InputMismatchException;
 
 public class TresEnLinea implements Game {
 
+    private static boolean CONSOLE = true;
+    private TresEnLineaBoard game;
+
+    private GamePane gamepane = null;
+
     public static void main(String[] args) {
         TresEnLinea tnl = new TresEnLinea();
         tnl.setGamePane(new GamePane());
         tnl.startGame();
     }
-
-    TresEnLineaBoard game;
-
-    GamePane gamepane = null;
-
-    public static boolean CONSOLE = true;
 
     @Override
     public void startGame() {
@@ -40,20 +39,21 @@ public class TresEnLinea implements Game {
         this.gamepane = gamepane;
         CONSOLE = false;
     }
-    public void playerTurn(SimplePlayer player) {
+
+    private void playerTurn(SimplePlayer player) {
         Coordinate pick;
-        boolean valid = false;
+        boolean valid;
         do {
-            if(CONSOLE)
+            if (CONSOLE)
                 pick = enterCoordsC(player);
             else
-                pick = enterCoords(player);
+                pick = enterCoords();
             valid = game.validTurn(pick);
         } while (!valid);
         game.doTurn(pick, player);
     }
 
-    public Coordinate enterCoords(SimplePlayer player) {
+    private Coordinate enterCoords() {
         Coordinate pick;
         String board = game.toString();
         //board += "\n<html>Player's " + player.getId() + " turn\n";
@@ -62,11 +62,12 @@ public class TresEnLinea implements Game {
         pick = (Coordinate) gamepane.showInputDialog(board, moves);
         return pick;
     }
-    public void gameOver(){
+
+    public void gameOver() {
         gamepane.showMessageDialog(game.toString());
     }
 
-    public Coordinate enterCoordsC(SimplePlayer simplePlayer) {
+    private Coordinate enterCoordsC(SimplePlayer simplePlayer) {
         game.printBoard();
         int x = 0, y = 0;
         do {
@@ -74,14 +75,14 @@ public class TresEnLinea implements Game {
             try {
                 x = lib.Misc.IO.scanInt("Enter coord digit: ");
                 y = lib.Misc.IO.scanChar("Enter coord letter: ");
-            }catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 continue;
             }
         } while (x < 1
                 || x > game.getSize()
                 || Character.toLowerCase(y) < 'a'
-                || Character.toLowerCase(y) > (char)game.getSize()-1+'a');
-        return new Coordinate(x-1, y-97);
+                || Character.toLowerCase(y) > (char) game.getSize() - 1 + 'a');
+        return new Coordinate(x - 1, y - 97);
     }
 
 }

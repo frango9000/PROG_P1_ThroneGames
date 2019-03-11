@@ -6,29 +6,22 @@ import java.util.ArrayList;
 
 public class DamasPlayer extends Player {
 
-    private char id;
-    private char idQ;
-    private char utf;
-    private char utfQ;
-
     private final static int MAX_PLAYERS = 2;
-
-    private static DamasPlayer ACTIVE_PLAYER;
-
-    private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS + 1);//index 0 is player 0 for ties etc
-
-
     private final static char P0 = ' ';
-
     private final static char P1_ID = 'o';
     private final static char P1_IDQ = 'O';         //utf  = '\u25EF';//◯
     private final static char P1_UTF = '\u26AA';    //utfQ = '\u26E3';//⛣
     private final static char P1_UTFQ = '\u29F2';   //utfQ = '\u25CD';//◍
-
     private final static char P2_ID = 'x';
     private final static char P2_IDQ = 'X';         //utf  = '\u2B24';//⬤
     private final static char P2_UTF = '\u26AB';
     private final static char P2_UTFQ = '\u29F3';   //utfQ = '\u29ED';//⧭
+    private static DamasPlayer ACTIVE_PLAYER;
+    private static ArrayList<DamasPlayer> players = new ArrayList<>(MAX_PLAYERS + 1);//index 0 is player 0 for ties etc
+    private char id;
+    private char idQ;
+    private char utf;
+    private char utfQ;
 
     private DamasPlayer(int n) {
         switch (n) {

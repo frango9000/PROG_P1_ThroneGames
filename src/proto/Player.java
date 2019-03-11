@@ -5,11 +5,11 @@ public class Player implements IPlayer,
 
     private char id;
 
-    public Player() {
+    protected Player() {
         this(1);
     }
 
-    public Player(int n) {
+    private Player(int n) {
         switch (n) {
             case 1:
                 id = 'o';

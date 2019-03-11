@@ -4,12 +4,9 @@ public class Coordinate {
 
     private int x;
     private int y;
-
     private String reference = "";
 
-    private static int MAX_COORD;
-
-    public Coordinate() {
+    protected Coordinate() {
     }
 
     public Coordinate(int x, int y) {
@@ -27,6 +24,9 @@ public class Coordinate {
         this.reference = reference;
     }
 
+    public static void setMaxCoord(int maxCoord) {
+    }
+
     public int getX() {
         return x;
     }
@@ -35,14 +35,10 @@ public class Coordinate {
         return y;
     }
 
-    public static void setMaxCoord(int maxCoord) {
-        MAX_COORD = maxCoord;
-    }
-
     @Override
     public String toString() {
         //return reference + "( " + (char) (x + 65) + ", " + (y) + " )";
-        return reference + "( " + (char) (x + 65) + ", " + (y+1) + " )";
+        return reference + "( " + (char) (x + 65) + ", " + (y + 1) + " )";
     }
 
 
