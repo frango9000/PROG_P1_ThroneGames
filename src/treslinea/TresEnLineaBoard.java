@@ -56,8 +56,10 @@ public class TresEnLineaBoard extends Board {
     public String toString(){
         StringBuilder str = new StringBuilder("<html>\n" +
                 "<style>\n" +
-                "table{border-collapse: collapse;}\n" +
-                "td{border:solid black 4px;\n" +
+                "table{border-collapse: collapse;\n" +
+                "table-layout: fixed;\n" +
+                "border-spacing: 0px;}\n" +
+                "td{border:solid black 2px;\n" +
                 "width: 70px;\n" +
                 "height: 70px;}\n" +
                 "th{width: 30px}\n" +
@@ -80,19 +82,17 @@ public class TresEnLineaBoard extends Board {
         for (int row = 0; row < table.length; row++) {
             str.append("<tr>\n");
             str.append("<th>"+(row+1)+"</th>\n");
-            str.append("</tr>\n");
-            str.append("<tr>\n");
-            for (int cell = -1; cell < table[row].length; cell++) {//all cells on each row
-                str.append("<td\n");
+            for (int cell = 0; cell < table[row].length; cell++) {//all cells on each row
+                str.append("<td");
                 if(row == 0)
                     str.append(" class=\"top\"");
                 else if(row == table.length-1)
                     str.append(" class=\"bot\"");
 
                 if(cell == 0)
-                    str.append(" id=\"left\"");
+                    str.append(" style=\"border-left: none;\"");
                 else if(cell == table[row].length-1)
-                    str.append(" id=\"right\"");
+                    str.append(" style=\"border-right: none;\"");
 
                 str.append(">");
                 //str.append((cell==-1)?"":table[row][cell]);
@@ -102,8 +102,8 @@ public class TresEnLineaBoard extends Board {
         }
 
         //close html
-        str.append("</table>\n" +
-                "</html>");
+        str.append("</table>\n");
+        str.append("</html>");
 
         return str.toString();
     }
