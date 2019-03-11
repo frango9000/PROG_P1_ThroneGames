@@ -13,8 +13,8 @@ public abstract class Board {
 
     public abstract Character isGameOver();
 
-    public abstract boolean validTurn(int[] coords, Player player);
+    public abstract boolean validTurn(int[] coords, SimplePlayer simplePlayer);
 
-    public abstract void doTurn(int[] coords, Player player);
+    public abstract void doTurn(int[] coords, SimplePlayer simplePlayer);
 
 }
