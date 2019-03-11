@@ -14,6 +14,7 @@ public class Ahorcado implements Game {
     private char[] palabraOculta;
     private int contador;
     private int TMAX = 7;
+
     public Ahorcado() {
         this.palabra = palabraAleatoria();
         this.palabraOculta = ocultarPalabra();
