@@ -103,7 +103,7 @@ public class DamasBoard extends Board {
         String cellWhite = "dddddd";
         String cellHighlight = "";
 
-        int totalWidth = 500;
+        int totalWidth = 300;
         int cellSize = totalWidth / rows+2;
 
         StringBuilder board = new StringBuilder();
