@@ -93,4 +93,12 @@ public class GamePane extends JFrame {
         return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
     }
 
+    public Object showGameMenu( Object[] options){
+        ImageIcon icon = new ImageIcon("./img/logo.png");
+        JLabel label = new JLabel("", icon, JLabel.TRAILING);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
+
+    }
+
 }

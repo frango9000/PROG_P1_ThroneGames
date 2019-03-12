@@ -42,11 +42,11 @@ public class PiedraPapelTijera implements Game {
         return jugadas[r.nextInt(3)];
     }
 
-    private String preguntarJugadaU() {
+    private String preguntarJugadaU(){
         marcador = marcador + " Marcador: " + "\n\n" + "Rondas Ganadas: " + win + "\n" + "Rondas Perdidas: " + lose + "\n" + "Rondas Empatadas: " + tie;
         int jugadaU = JOptionPane.showOptionDialog(frame, marcador + "\n\n" + "Selecciona tu proxima jugada", "Ronda: " + contMarcador, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, jugadas, jugadas[0]);
-        if (jugadaU == -1)
-            System.exit(0);
+        //if (jugadaU == -1)
+            //System.exit(0);
         return jugadas[jugadaU];
     }
 
