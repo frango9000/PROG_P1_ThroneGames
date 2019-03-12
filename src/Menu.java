@@ -10,7 +10,7 @@ class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera", "Damas"};
+    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera", "Damas", "Damas Intl", "Damas Canada", "Damas OP", "Damas Light"};
 
     public Menu() {
         gamepane = new GamePane();
@@ -34,6 +34,18 @@ class Menu {
                 break;
             case "Damas":
                 game = new Damas();
+                break;
+            case "Damas Intl":
+                game = new Damas(10);
+                break;
+            case "Damas Canada":
+                game = new Damas(12);
+                break;
+            case "Damas OP":
+                game = new Damas(20);
+                break;
+            case "Damas Light":
+                game = new Damas(4);
                 break;
             default:
                 game = new Damas();

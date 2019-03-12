@@ -26,9 +26,16 @@ public class Damas implements Game {
     private ArrayList<int[]> attacks;
     private ArrayList<int[]> movats;
 
+    private int size = 8;
+
     private int totalWidth = 900;
 
     public Damas() {
+        this(8);
+    }
+
+    public Damas(int size) {
+        this.size = size;
         PLAYER_1 = DamasPlayer.newPlayer();
         PLAYER_2 = DamasPlayer.newPlayer();
     }
@@ -66,7 +73,7 @@ public class Damas implements Game {
             menu = new damasConsole();
         else menu = new damasWindow();
 
-        table = new DamasBoard();
+        table = new DamasBoard(size);
         table.setTotalWidth(totalWidth);
 
         int count = 1;
