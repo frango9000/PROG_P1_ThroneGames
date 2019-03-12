@@ -55,7 +55,7 @@ class Menu {
 
             } catch (NullPointerException e) {
 
-                gamepane.showMessageDialog("Gracias por jugar.");
+                gamepane.showCloseDialog();
                 System.exit(1);
             }
             try {

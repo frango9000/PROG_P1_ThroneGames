@@ -98,7 +98,13 @@ public class GamePane extends JFrame {
         JLabel label = new JLabel("", icon, JLabel.TRAILING);
         label.setFont(new Font(font, Font.PLAIN, 14));
         return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
+    }
 
+    public void showCloseDialog() {
+        ImageIcon icon = new ImageIcon("./img/close.png");
+        JLabel label = new JLabel("", icon, JLabel.TRAILING);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        JOptionPane.showMessageDialog(this, label, title, JOptionPane.PLAIN_MESSAGE);
     }
 
 }
