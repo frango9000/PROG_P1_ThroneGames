@@ -42,6 +42,13 @@ public class GamePane extends JFrame {
         title = "Juegos Reunidos";
     }
 
+    public static void main(String[] args) {
+        GamePane gp = new GamePane();
+
+        DamasBoard d = new DamasBoard();
+        gp.showMessageDialog(d.toString());
+    }
+
     public int getMinWidth() {
         return MIN_WIDTH;
     }
@@ -56,13 +63,6 @@ public class GamePane extends JFrame {
 
     public int getMaxHeight() {
         return MAX_HEIGHT;
-    }
-
-    public static void main(String[] args) {
-        GamePane gp = new GamePane();
-
-        DamasBoard d = new DamasBoard();
-        gp.showMessageDialog(d.toString());
     }
 
     @Override
@@ -91,6 +91,20 @@ public class GamePane extends JFrame {
         JLabel label = new JLabel(msg);
         label.setFont(new Font(font, Font.PLAIN, 14));
         return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
+    }
+
+    public Object showGameMenu(Object[] options) {
+        ImageIcon icon = new ImageIcon("./img/logo.png");
+        JLabel label = new JLabel("", icon, JLabel.TRAILING);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        return JOptionPane.showInputDialog(this, label, title, JOptionPane.PLAIN_MESSAGE, null, options, null);
+    }
+
+    public void showCloseDialog() {
+        ImageIcon icon = new ImageIcon("./img/close.png");
+        JLabel label = new JLabel("", icon, JLabel.TRAILING);
+        label.setFont(new Font(font, Font.PLAIN, 14));
+        JOptionPane.showMessageDialog(this, label, title, JOptionPane.PLAIN_MESSAGE);
     }
 
 }
