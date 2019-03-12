@@ -111,7 +111,7 @@ public class DamasBoard extends Board {
         String cellHighlight = "";
 
         int indexSize = 28;
-        int cellSize = (totalWidth - (indexSize*2))/ rows;
+        int cellSize = (totalWidth - (indexSize * 2)) / rows;
 
         StringBuilder board = new StringBuilder("<html>\n" +
                 "<style>\n" +
@@ -126,11 +126,11 @@ public class DamasBoard extends Board {
                 "       font-size: " + pieceSize + "px;}\n" +
                 "td.w{background-color: #" + cellWhite + ";}\n" +
                 "td.b{background-color: #" + cellBlack + ";}\n" +
-                "th{width: "+indexSize+"px;\n" +
+                "th{width: " + indexSize + "px;\n" +
                 "       font-size:" + coordsSize + "px;}\n" +
                 " td.tail {font-weight: bolder;\n" +
-                "        font-size: "+fontSize+"px;\n" +
-                "        width: "+totalWidth+"px;\n}" +
+                "        font-size: " + fontSize + "px;\n" +
+                "        width: " + totalWidth + "px;\n}" +
                 "</style>\n" +
                 "<body>\n" +
                 "<table class=\"board\">\n");
