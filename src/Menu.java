@@ -10,37 +10,57 @@ class Menu {
 
     private GamePane gamepane;
 
-    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera", "Damas"};
+    private String[] games = {"3 en Linea", "Ahorcado", "Piedra Papel o Tijera", "Damas", "Damas Intl", "Damas Canada", "Damas OP", "Damas Light"};
 
     public Menu() {
         gamepane = new GamePane();
     }
 
     public void gamesMenu() {
+        while (true) {
 
-        String selection = (String) gamepane.showInputDialog("Elige un juego", games);
+            Game game = null;
+            String selection = (String) gamepane.showInputDialog("Elige un juego", games);
 
-        Game game;
+            try {
+                switch (selection) {
+                    case "3 en Linea":
+                        game = new TresEnLinea();
+                        break;
+                    case "Ahorcado":
+                        game = new Ahorcado();
+                        break;
+                    case "Piedra Papel o Tijera":
+                        game = new PiedraPapelTijera();
+                        break;
+                    case "Damas":
+                        game = new Damas();
+                        break;
+                    case "Damas Intl":
+                        game = new Damas(10);
+                        break;
+                    case "Damas Canada":
+                        game = new Damas(12);
+                        break;
+                    case "Damas OP":
+                        game = new Damas(20);
+                        break;
+                    case "Damas Light":
+                        game = new Damas(4);
+                        break;
+                    default:
+                        System.exit(0);
+                }
 
-        switch (selection) {
-            case "3 en Linea":
-                game = new TresEnLinea();
-                break;
-            case "Ahorcado":
-                game = new Ahorcado();
-                break;
-            case "Piedra Papel o Tijera":
-                game = new PiedraPapelTijera();
-                break;
-            case "Damas":
-                game = new Damas();
-                break;
-            default:
-                game = new Damas();
-                break;
+            } catch (NullPointerException e) {
+
+                gamepane.showMessageDialog("Gracias por jugar.");
+                System.exit(1);
+            }
+
+            gamepane.setTitle(selection);
+            game.setGamePane(gamepane);
+            game.startGame();
         }
-        gamepane.setTitle(selection);
-        game.setGamePane(gamepane);
-        game.startGame();
     }
 }

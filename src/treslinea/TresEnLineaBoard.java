@@ -68,6 +68,7 @@ public class TresEnLineaBoard extends Board {
                 "<style>\n" +
                 "table{border-collapse: collapse;\n" +
                 "table-layout: fixed;\n" +
+                //"border:solid black 1px;\n" +
                 "border-spacing: 0px;}\n" +
                 "td{border:solid black 2px;\n" +
                 "width: 70px;\n" +
@@ -115,7 +116,7 @@ public class TresEnLineaBoard extends Board {
 
         //close html
         str.append("</table>\n");
-        str.append("</html>");
+        //str.append("</html>");
         //System.out.println(str.toString());
         return str.toString();
     }
