@@ -35,7 +35,7 @@ public class GamePane extends JFrame {
     private String font = "sans-serif";
 
     public GamePane() {
-        UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
+        //UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
         title = "Juegos Reunidos";
     }
 
