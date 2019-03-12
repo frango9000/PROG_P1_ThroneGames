@@ -11,9 +11,11 @@ import java.util.InputMismatchException;
 public class TresEnLinea implements Game {
 
     private static boolean CONSOLE = true;
-    private TresEnLineaBoard game;
+    private TresEnLineaBoard board;
 
     private GamePane gamepane = null;
+
+    SimplePlayer activePlayer;
 
     public static void main(String[] args) {
         TresEnLinea tnl = new TresEnLinea();
@@ -23,15 +25,13 @@ public class TresEnLinea implements Game {
 
     @Override
     public void startGame() {
-        game = new TresEnLineaBoard();
-        SimplePlayer p1 = SimplePlayer.PLAYER1;
-        SimplePlayer p2 = SimplePlayer.PLAYER2;
+        board = new TresEnLineaBoard();
         int count = 0;
-        while (game.isGameOver() == null) {
-            playerTurn((count++ % 2 == 0) ? p1 : p2);
+        while (board.isGameOver() == null) {
+            activePlayer = (count++ % 2 == 0) ? SimplePlayer.PLAYER1 : SimplePlayer.PLAYER2;
+            playerTurn();
         }
-        game.printBoard();
-        System.out.println("Game Over");
+        gameOver();
     }
 
     @Override
@@ -40,38 +40,45 @@ public class TresEnLinea implements Game {
         CONSOLE = false;
     }
 
-    private void playerTurn(SimplePlayer player) {
+    private void playerTurn() {
         Coordinate pick;
         boolean valid;
         do {
             if (CONSOLE)
-                pick = enterCoordsC(player);
+                pick = enterCoordsC();
             else
                 pick = enterCoords();
-            valid = game.validTurn(pick);
+            valid = board.validTurn(pick);
         } while (!valid);
-        game.doTurn(pick, player);
+        board.doTurn(pick, activePlayer);
     }
 
     private Coordinate enterCoords() {
         Coordinate pick;
-        String board = game.toString();
-        //board += "\n<html>Player's " + player.getId() + " turn\n";
-
-        Coordinate[] moves = game.movesArray();
-        pick = (Coordinate) gamepane.showInputDialog(board, moves);
+        String turn = board.toString() +
+                "<table><tr><td width=\"240px\" style=\"border: none;font-size:20px\">" +
+                "Player's " + activePlayer.getId() + " turn" +
+                "</td></tr></table></html>";
+        Coordinate[] moves = board.movesArray();
+        pick = (Coordinate) gamepane.showInputDialog(turn, moves);
         return pick;
     }
 
     public void gameOver() {
-        gamepane.showMessageDialog(game.toString());
+        String gameOver = board.toString() +
+                "<table><tr><td width=\"240px\" style=\"border: none;\">" +
+                "Player " + activePlayer.getId() + " wins" +
+                "</td></tr></table></html>";
+        gamepane.showMessageDialog(gameOver);
+        board.printBoard();
+        System.out.println("Game Over");
     }
 
-    private Coordinate enterCoordsC(SimplePlayer simplePlayer) {
-        game.printBoard();
+    private Coordinate enterCoordsC() {
+        board.printBoard();
         int x = 0, y = 0;
         do {
-            System.out.println("Player " + simplePlayer.getId() + " turn");
+            System.out.println("Player " + activePlayer.getId() + " turn");
             try {
                 x = lib.Misc.IO.scanInt("Enter coord digit: ");
                 y = lib.Misc.IO.scanChar("Enter coord letter: ");
@@ -79,9 +86,9 @@ public class TresEnLinea implements Game {
                 continue;
             }
         } while (x < 1
-                || x > game.getSize()
+                || x > board.getSize()
                 || Character.toLowerCase(y) < 'a'
-                || Character.toLowerCase(y) > (char) game.getSize() - 1 + 'a');
+                || Character.toLowerCase(y) > (char) board.getSize() - 1 + 'a');
         return new Coordinate(x - 1, y - 97);
     }
 
