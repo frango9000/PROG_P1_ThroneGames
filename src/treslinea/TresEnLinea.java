@@ -15,7 +15,7 @@ public class TresEnLinea implements Game {
 
     private GamePane gamepane = null;
 
-    SimplePlayer activePlayer;
+    private SimplePlayer activePlayer;
 
     public static void main(String[] args) {
         TresEnLinea tnl = new TresEnLinea();
@@ -64,10 +64,10 @@ public class TresEnLinea implements Game {
         return pick;
     }
 
-    public void gameOver() {
+    private void gameOver() {
         String gameOver = board.toString() +
                 "<table><tr><td width=\"240px\" style=\"border: none;\">" +
-                "Player " + activePlayer.getId() + " wins" +
+                "Player " + activePlayer.getId() + " wins!" +
                 "</td></tr></table></html>";
         gamepane.showMessageDialog(gameOver);
         board.printBoard();
