@@ -44,14 +44,6 @@ public class Damas implements Game {
         return stage;
     }
 
-    public int getTotalWidth() {
-        return totalWidth;
-    }
-
-    public void setTotalWidth(int totalWidth) {
-        this.totalWidth = totalWidth;
-    }
-
     private static void setStage(int n) {
         switch (n) {
             case 0:
@@ -61,6 +53,14 @@ public class Damas implements Game {
                 stage = "move";
                 break;
         }
+    }
+
+    public int getTotalWidth() {
+        return totalWidth;
+    }
+
+    public void setTotalWidth(int totalWidth) {
+        this.totalWidth = totalWidth;
     }
 
     public void setGamepane(GamePane gamepane) {

@@ -17,10 +17,11 @@ class Menu {
     }
 
     public void gamesMenu() {
+        Game game;
         while (true) {
 
-            Game game = null;
-            String selection = (String) gamepane.showInputDialog("Elige un juego", games);
+            game = null;
+            String selection = (String) gamepane.showGameMenu(games);
 
             try {
                 switch (selection) {
@@ -54,13 +55,18 @@ class Menu {
 
             } catch (NullPointerException e) {
 
-                gamepane.showMessageDialog("Gracias por jugar.");
+                gamepane.showCloseDialog();
                 System.exit(1);
             }
+            try {
+                gamepane.setTitle(selection);
+                game.setGamePane(gamepane);
+                game.startGame();
+            } catch (Exception e) {
 
-            gamepane.setTitle(selection);
-            game.setGamePane(gamepane);
-            game.startGame();
+            }
+
         }
+
     }
 }
