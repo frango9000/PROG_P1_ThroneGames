@@ -24,8 +24,10 @@ public class DamasBoard extends Board {
 
     private char[][] table;
 
+    private int totalWidth;
+
     public DamasBoard() {
-        this(8, 9);
+        this(4, 9);
     }
 
     public DamasBoard(int size) {
@@ -41,6 +43,10 @@ public class DamasBoard extends Board {
 
         CoordinateDamas.setMaxCoord(size);
         clearBoard();
+    }
+
+    public void setTotalWidth(int totalWidth) {
+        this.totalWidth = totalWidth;
     }
 
     @Override
@@ -97,30 +103,34 @@ public class DamasBoard extends Board {
         int cellBorder = 0;
 
         int pieceSize = 8 * 32 / rows;
-        int fontSize = 8 * 20 / rows;
+        int coordsSize = 8 * 20 / rows;
+        int fontSize = 28;
 
         String cellBlack = "aaaaaa";
         String cellWhite = "dddddd";
         String cellHighlight = "";
 
-        int totalWidth = 300;
-        int cellSize = totalWidth / rows + 2;
+        int indexSize = 28;
+        int cellSize = (totalWidth - (indexSize*2))/ rows;
 
         StringBuilder board = new StringBuilder("<html>\n" +
                 "<style>\n" +
                 "table.board{border:solid " + outBorder + "px black;\n" +
-                "border-collapse: collapse;\n" +
-                "table-layout: fixed;\n" +
-                "border-spacing: " + cellSpace + "px;}\n" +
+                "       border-collapse: collapse;\n" +
+                "       table-layout: fixed;\n" +
+                "       border-spacing: " + cellSpace + "px;}\n" +
+                "td, th{text-align: center;}\n" +
                 ".board td {border:" + cellBorder + "px solid black;\n" +
-                "width: " + cellSize + "px;\n" +
-                "height: " + cellSize + "px;\n" +
-                "text-align: center;\n" +
-                "font-size: " + pieceSize + "px;}\n" +
+                "       width: " + cellSize + "px;\n" +
+                "       height: " + cellSize + "px;\n" +
+                "       font-size: " + pieceSize + "px;}\n" +
                 "td.w{background-color: #" + cellWhite + ";}\n" +
                 "td.b{background-color: #" + cellBlack + ";}\n" +
-                "th{width: 28px;font-size:" + fontSize + "px}\n" +
-                ".bottom{text-align:center;font-size:" + 18 + "px}" +
+                "th{width: "+indexSize+"px;\n" +
+                "       font-size:" + coordsSize + "px;}\n" +
+                " td.tail {font-weight: bolder;\n" +
+                "        font-size: "+fontSize+"px;\n" +
+                "        width: "+totalWidth+"px;\n}" +
                 "</style>\n" +
                 "<body>\n" +
                 "<table class=\"board\">\n");
@@ -142,16 +152,22 @@ public class DamasBoard extends Board {
                 board.append(((row % 2 != 0 && cell % 2 == 0) || (row % 2 == 0 && cell % 2 != 0)) ? 'b' : 'w');
                 board.append("\">").append(DamasPlayer.getCaseSensitiveUTF(table[row][cell])).append("</td>\n");
             }
-            board.append("<th>").append(table.length - row).append("</th>\n");//last column of numbers
+            board.append("<th>");
+            board.append(table.length - row);
+            board.append("</th>\n");//last column of numbers
         }
-        board.append("</tr><tr><th></th>");
+        board.append("</tr>");
+
+        board.append("<tr>")
+                .append("<th></th>");
         for (int col = 0; col < table[0].length; col++) {
-            board.append("<th>").append((char) (65 + col)).append("</th>\n");//last row of letters
+            board.append("<th>");
+            board.append((char) (65 + col));
+            board.append("</th>\n");//last row of letters
         }
         //tail
-        String turnTag = (isGameOver() == null) ? "<tr><td>Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:</td></tr>" : "";
-        board.append("</tr>\n" + "</table>\n" + "<table class=\"bottom\">").append(turnTag).append("</table>").append("Pick a ").append(Damas.getStage()).append(": ").append("</body>\n").append("</html>");
-
+        board.append("</tr>\n");
+        board.append("</table>\n");
 
         return board.toString();
     }

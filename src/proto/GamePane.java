@@ -7,8 +7,10 @@ import java.awt.*;
 import java.io.File;
 
 public class GamePane extends JFrame {
-    private static final int MIN_WIDTH = 400;
-    private static final int MIN_HEIGHT = 400;
+    private final int MIN_WIDTH = 0;
+    private final int MIN_HEIGHT = 0;
+    private final int MAX_WIDTH = 400;
+    private final int MAX_HEIGHT = 400;
     File f = new File("img/logo.jpg");
     String html = "<html>This is how to get:"
             + "<ul><li><i>italics</i> and "
@@ -35,8 +37,25 @@ public class GamePane extends JFrame {
     private String font = "sans-serif";
 
     public GamePane() {
-        UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
+        //UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
+        //UIManager.put("OptionPane.maximumSize", new Dimension(MAX_WIDTH, MAX_HEIGHT));
         title = "Juegos Reunidos";
+    }
+
+    public int getMinWidth() {
+        return MIN_WIDTH;
+    }
+
+    public int getMinHeight() {
+        return MIN_HEIGHT;
+    }
+
+    public int getMaxWidth() {
+        return MAX_WIDTH;
+    }
+
+    public int getMaxHeight() {
+        return MAX_HEIGHT;
     }
 
     public static void main(String[] args) {
