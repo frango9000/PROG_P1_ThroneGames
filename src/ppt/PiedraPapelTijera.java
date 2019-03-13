@@ -8,6 +8,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class PiedraPapelTijera implements Game {
+    public static void main(String[] args) {
+        PiedraPapelTijera t = new PiedraPapelTijera();
+        t.startGame();
+    }
 
     private static String[] msjRonda = {"Empate! " + "\n\n", "Ganaste la ronda!  " + "\n\n", "Perdiste la ronda! " + "\n\n"};
     Scanner scan = new Scanner(System.in);
@@ -57,15 +61,15 @@ public class PiedraPapelTijera implements Game {
         for (int i = 0; i < jugadas.length; i++) {
 
             if ((jugadas[i].equals(jugada)) && (jugadas2[i].equals(jugadaM))) {
-                marcador += jugada + " vence a " + jugadaM + "\n";
+                marcador = jugada + " vence a " + jugadaM + "\n";
                 return 1;
 
             } else if ((jugadas[i].equals(jugadaM)) && (jugadas2[i].equals(jugada))) {
-                marcador += jugada + " pierde contra " + jugadaM + "\n";
+                marcador = jugada + " pierde contra " + jugadaM + "\n";
                 return 2;
 
             } else if ((jugadas[i].equals(jugadaM)) && (jugadas[i].equals(jugada))) {
-                marcador += jugada + " es igual a " + jugadaM + "\n";
+                marcador = jugada + " es igual a " + jugadaM + "\n";
                 return 0;
             }
         }
@@ -74,16 +78,16 @@ public class PiedraPapelTijera implements Game {
 
     private void arbitro(int resultado) {
         if (resultado == 0) {
-            marcador = msjRonda[0];
+            marcador = msjRonda[0] + marcador + "\n";
             tie += 1;
 
         } else if (resultado == 1) {
-            marcador = msjRonda[1];
+            marcador = msjRonda[1] + marcador + "\n";
             win += 1;
             contRonda += 1;
 
         } else if (resultado == 2) {
-            marcador = msjRonda[2];
+            marcador = msjRonda[2] + marcador + "\n";
             lose += 1;
             contRonda += 1;
 
