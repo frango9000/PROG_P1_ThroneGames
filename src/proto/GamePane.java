@@ -9,7 +9,7 @@ import java.io.File;
 public class GamePane extends JFrame {
     private final int MIN_WIDTH = 0;
     private final int MIN_HEIGHT = 0;
-    private final int MAX_WIDTH = 400;
+    private final int MAX_WIDTH = 300;
     private final int MAX_HEIGHT = 400;
     File f = new File("img/logo.jpg");
     String html = "<html>This is how to get:"
@@ -38,7 +38,7 @@ public class GamePane extends JFrame {
 
     public GamePane() {
         //UIManager.put("OptionPane.minimumSize", new Dimension(MIN_WIDTH, MIN_HEIGHT));
-        //UIManager.put("OptionPane.maximumSize", new Dimension(MAX_WIDTH, MAX_HEIGHT));
+        UIManager.put("OptionPane.maximumSize", new Dimension(MAX_WIDTH, MAX_HEIGHT));
         title = "Juegos Reunidos";
     }
 

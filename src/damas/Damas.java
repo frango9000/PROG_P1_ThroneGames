@@ -183,9 +183,9 @@ public class Damas implements Game {
         public int pickPiece() {
             String msg = table.toString() +
                     "<table><tr><td class=\"tail\">" +
-                    "Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:" +
+                    "Turno: " + DamasPlayer.getActivePlayer().getUtf() + "" +
                     "</td></tr></table>" +
-                    "Pick a piece :";
+                    "Elige una ficha :";
 
             CoordinateDamas[] movablesArray = CoordinateDamas.pickAPiece(movables);
             CoordinateDamas pick = (CoordinateDamas) gamepane.showInputDialog(msg, movablesArray);
@@ -196,9 +196,9 @@ public class Damas implements Game {
         public int pickMove() {
             String msg = table.toString() +
                     "<table><tr><td class=\"tail\">" +
-                    "Player's " + DamasPlayer.getActivePlayer().getUtf() + " turn:" +
+                    "Turno: " + DamasPlayer.getActivePlayer().getUtf() + "" +
                     "</td></tr></table>" +
-                    "Pick a move :";
+                    "Elige una jugada :";
 
             CoordinateDamas[] movatsArray = CoordinateDamas.pickAMove(moves, attacks);
             CoordinateDamas pick = (CoordinateDamas) gamepane.showInputDialog(msg, movatsArray);
@@ -210,7 +210,7 @@ public class Damas implements Game {
         public void gameOver() {
             String msg = table.toString() +
                     "<table><tr><td class=\"tail\">" +
-                    "Player's " + DamasPlayer.getActivePlayer().getUtf() + " wins!" +
+                    "Gana " + DamasPlayer.getActivePlayer().getUtf() + " !" +
                     "</td></tr></table>";
             gamepane.showMessageDialog(msg);
 
