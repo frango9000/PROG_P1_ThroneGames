@@ -103,10 +103,10 @@ public class DamasBoard extends Board {
         int cellSpace = 1;
         int cellBorder = 0;
 
-        int pieceSize = 8 * 32 / rows;
-        int coordsSize = 8 * 20 / rows;
-        int fontSize = 20;
-        int indexSize =  20;
+        int pieceSize = 8 * 24 / rows;
+        int coordsSize = 8 * 16 / rows;
+        int fontSize = 16;
+        int indexSize =  16;
 
         String cellBlack = "aaaaaa";
         String cellWhite = "dddddd";
