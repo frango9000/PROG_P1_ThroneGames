@@ -4,15 +4,13 @@ import proto.Game;
 import proto.GamePane;
 
 import javax.swing.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
 public class PiedraPapelTijera implements Game {
-    public static void main(String[] args) {
-        PiedraPapelTijera t = new PiedraPapelTijera();
-        t.startGame();
-    }
-
     private static String[] msjRonda = {"Empate! " + "\n\n", "Ganaste la ronda!  " + "\n\n", "Perdiste la ronda! " + "\n\n"};
     Scanner scan = new Scanner(System.in);
     private String[] jugadas = {"Piedra", "Papel", "Tijera"};
@@ -24,6 +22,11 @@ public class PiedraPapelTijera implements Game {
     private int contMarcador = 0;
     private JFrame frame = new JFrame();
     private GamePane gamepane = null;
+
+    public static void main(String[] args) {
+        PiedraPapelTijera t = new PiedraPapelTijera();
+        t.startGame();
+    }
 
     @Override
     public void startGame() {
@@ -98,11 +101,26 @@ public class PiedraPapelTijera implements Game {
     }
 
     private void gameOver() {
-        if (win > lose) {
-            JOptionPane.showMessageDialog(frame, "Felicidades Campeon! Ganaste la partida " + win + " a " + lose, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(frame, "Perdiste la partida! " + lose + " a " + win, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
-        }
-    }
+        String msg;
 
+        if (win > lose) {
+            msg = "Felicidades Campeon! Ganaste la partida " + win + " a " + lose;
+        } else {
+            msg = "Perdiste la partida! " + lose + " a " + win;
+        }
+        JOptionPane.showMessageDialog(frame, msg, "GAME OVER", JOptionPane.PLAIN_MESSAGE);
+
+        PrintWriter pw = null;
+        try {
+            //File file = ;
+            pw = new PrintWriter(new FileWriter("src/ppt/log.txt", true));
+            pw.println(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            pw.close();
+        }
+
+
+}
 }
