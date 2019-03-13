@@ -28,7 +28,7 @@ public class Damas implements Game {
 
     private int size = 8;
 
-    private int totalWidth = 900;
+    private static int totalWidth = 200;
 
     public Damas() {
         this(8);
@@ -55,12 +55,12 @@ public class Damas implements Game {
         }
     }
 
-    public int getTotalWidth() {
+    public static int getTotalWidth() {
         return totalWidth;
     }
 
-    public void setTotalWidth(int totalWidth) {
-        this.totalWidth = totalWidth;
+    public static void setTotalWidth(int totalWidth) {
+        totalWidth = totalWidth;
     }
 
     public void setGamepane(GamePane gamepane) {
@@ -69,12 +69,13 @@ public class Damas implements Game {
 
     @Override
     public void startGame() {
+        try{
+
         if (gamepane == null)
             menu = new damasConsole();
         else menu = new damasWindow();
 
         table = new DamasBoard(size);
-        table.setTotalWidth(totalWidth);
 
         int count = 1;
         while (table.isGameOver() == null) {
@@ -82,6 +83,10 @@ public class Damas implements Game {
             nextTurn();
         }
         menu.gameOver();
+
+        }catch(Exception e){
+            DamasPlayer.reset();
+        }
     }
 
     @Override

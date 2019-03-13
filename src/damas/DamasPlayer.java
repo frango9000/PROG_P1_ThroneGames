@@ -46,6 +46,9 @@ public class DamasPlayer extends Player {
         }
         players.add(this);
     }
+    public static void reset(){
+         players.clear();
+    }
 
     public static DamasPlayer newPlayer() {
         if (players.size() == 0)

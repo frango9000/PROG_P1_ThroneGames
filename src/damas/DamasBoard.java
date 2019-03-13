@@ -24,7 +24,7 @@ public class DamasBoard extends Board {
 
     private char[][] table;
 
-    private int totalWidth;
+    private int totalWidth = 400;
 
     public DamasBoard() {
         this(4, 9);
@@ -42,6 +42,7 @@ public class DamasBoard extends Board {
         table = new char[rows][cols];
 
         CoordinateDamas.setMaxCoord(size);
+        //totalWidth = Damas.getTotalWidth();
         clearBoard();
     }
 
@@ -104,13 +105,13 @@ public class DamasBoard extends Board {
 
         int pieceSize = 8 * 32 / rows;
         int coordsSize = 8 * 20 / rows;
-        int fontSize = 28;
+        int fontSize = 20;
+        int indexSize =  20;
 
         String cellBlack = "aaaaaa";
         String cellWhite = "dddddd";
         String cellHighlight = "";
 
-        int indexSize = 28;
         int cellSize = (totalWidth - (indexSize * 2)) / rows;
 
         StringBuilder board = new StringBuilder("<html>\n" +
