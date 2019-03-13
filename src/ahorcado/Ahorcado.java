@@ -34,14 +34,14 @@ public class Ahorcado implements Game {
     private static String dibujar(int caso) {
         String[] muñeco = new String[17];
         muñeco[0] = "   --------------------------------" + "\n";
-        muñeco[1] = "   | --         HORCA        -- |" + "\n";
+        muñeco[1] = "   | --          HORCA         -- |" + "\n";
         muñeco[2] = "   --------------------------------" + "\n";
         muñeco[3] = "   |                               |" + "\n";
         muñeco[4] = "   |                               |" + "\n";
-        muñeco[5] = "   |                           ∧∧∧∧∧  " + "\n";
-        muñeco[6] = "   |                           |  O O  |" + "\n";
-        muñeco[7] = "   |                           |   ___   |" + "\n";
-        muñeco[8] = "   |                            \\______/" + "\n";
+        muñeco[5] = "   |                          ∧∧∧∧  " + "\n";
+        muñeco[6] = "   |                          |  O  O  | " + "\n";
+        muñeco[7] = "   |                          |   ___  |  " + "\n";
+        muñeco[8] = "   |                          \\_____/  " + "\n";
         muñeco[9] = "   |                                ||" + "\n";
         muñeco[10] = "   |                                ||" + "\n";
         muñeco[11] = "   |                                ||" + "\n";
@@ -151,8 +151,8 @@ public class Ahorcado implements Game {
 
             case 7:
                 StringBuilder ko = new StringBuilder("\n");
-                muñeco[6] = "   |                           |  X  X  |" + "\n";
-                muñeco[7] = "   |                           |    o    |" + "\n";
+                muñeco[6] = "   |                          |  X  X  |" + "\n";
+                muñeco[7] = "   |                          |     o    |" + "\n";
                 muñeco[9] = "   |                               //||\\\\" + "\n";
                 muñeco[9] = "   |                             // || \\\\" + "\n";
                 muñeco[10] = "   |                           //   ||  \\\\" + "\n";
