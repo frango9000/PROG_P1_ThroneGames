@@ -5,17 +5,44 @@ import proto.GamePane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Ahorcado implements Game {
-    private static String[] palabras = {"casa", "perro", "jungla", "proyecto", "escritorio", "lampara", "programacion", "java", "adivinar"};
+    private static String[] palabras;
     private Frame frame = new Frame();
     private String palabra;
     private char[] palabraOculta;
     private int contador;
     private int TMAX = 7;
 
+    private boolean fromFile = true;
+
+
     public Ahorcado() {
+        if(fromFile){
+            ArrayList<String> lista = new ArrayList<>();
+            try {
+                File file = new File("src/ahorcado/palabras.txt");
+                Scanner scan = new Scanner(file);
+                while(scan.hasNext()){
+                    lista.add(scan.next());
+                }
+                palabras = new String[lista.size()];
+                for (int i = 0; i < lista.size(); i++) {
+                    palabras[i] = lista.get(i);
+
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
         this.palabra = palabraAleatoria();
         this.palabraOculta = ocultarPalabra();
         contador = 0;
